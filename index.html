@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<title>Ziggy's Brain Garden — Games &amp; Flashcards for Kids</title>
+<meta name="description" content="Fun brain puzzle games and general knowledge flashcards for kids ages 3-8. Play memory match, pattern recall, odd-one-out and more!">
+
+<!-- PWA -->
+<meta name="theme-color" content="#9B72CF">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Brain Garden">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+
+<!-- Fonts (cached by service worker; system fallback keeps it fun offline too) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="app">
+
+  <div class="topbar">
+    <div class="brand">
+      <svg class="brand-star" viewBox="0 0 100 100" aria-hidden="true">
+        <polygon points="50,3 63,35 100,38 72,60 82,98 50,78 18,98 28,60 0,38 37,35"
+                 fill="#FFC93C" stroke="#3A2E4D" stroke-width="2"/>
+      </svg>
+      <h1 class="brand-title">Ziggy's Brain Garden</h1>
+    </div>
+    <div class="stars-badge">⭐ <span id="totalStars">0</span></div>
+  </div>
+
+  <!-- =================== HOME =================== -->
+  <section id="screen-home" class="screen active">
+    <div class="screen-header">
+      <p>Pick a game or a flashcard deck to explore!</p>
+    </div>
+
+    <span class="section-eyebrow">🧩 Brain Games</span>
+    <div class="sticker-grid">
+      <button class="sticker c1" data-nav="picker-memory">
+        <span class="emoji">🧠</span>
+        <span class="label">Memory Match</span>
+        <span class="sub">Focus</span>
+      </button>
+      <button class="sticker c2" data-nav="game-simon">
+        <span class="emoji">🎵</span>
+        <span class="label">Pattern Pop</span>
+        <span class="sub">Memory</span>
+      </button>
+      <button class="sticker c3" data-nav="picker-odd">
+        <span class="emoji">🔍</span>
+        <span class="label">Odd One Out</span>
+        <span class="sub">Attention</span>
+      </button>
+      <button class="sticker c4" data-nav="game-sort">
+        <span class="emoji">🧺</span>
+        <span class="label">Shape Sorter</span>
+        <span class="sub">Thinking</span>
+      </button>
+      <button class="sticker c5" data-nav="game-count">
+        <span class="emoji">🔢</span>
+        <span class="label">Count &amp; Tap</span>
+        <span class="sub">Numbers</span>
+      </button>
+    </div>
+
+    <span class="section-eyebrow">📚 Flashcard Decks</span>
+    <div class="sticker-grid">
+      <button class="sticker c6" data-nav="picker-decks">
+        <span class="emoji">🗂️</span>
+        <span class="label">Browse Cards</span>
+        <span class="sub">All Subjects</span>
+      </button>
+      <button class="sticker c2" data-nav="picker-quiz">
+        <span class="emoji">❓</span>
+        <span class="label">Quiz Time</span>
+        <span class="sub">Test Yourself</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- =================== MEMORY: difficulty picker =================== -->
+  <section id="screen-picker-memory" class="screen">
+    <div class="screen-header">
+      <button class="back-btn" data-back="screen-home">⬅ Back</button>
+      <h2 style="margin-top:14px;">🧠 Memory Match</h2>
+      <p>Flip the cards and find matching pairs!</p>
+    </div>
+    <div class="picker-grid">
+      <button class="picker-card" data-memory-size="2x4"><span class="emoji">🌱</span><span class="deck-title">Easy (8 cards)</span></button>
+      <button class="picker-card" data-memory-size="3x4"><span class="emoji">🌿</span><span class="deck-title">Medium (12 cards)</span></button>
+      <button class="picker-card" data-memory-size="4x4"><span class="emoji">🌳</span><span class="deck-title">Hard (16 cards)</span></button>
+    </div>
+  </section>
+
+  <section id="screen-game-memory" class="screen">
+    <div class="screen-header">
+      <button class="back-btn" data-back="screen-picker-memory">⬅ Back</button>
+    </div>
+    <div class="hud">
+      <div class="hud-chip">🔄 <span id="memoryMoves">0</span> moves</div>
+      <div class="hud-chip">✅ <span id="memoryPairs">0</span>/<span id="memoryTotalPairs">0</span> pairs</div>
+    </div>
+    <div class="game-area">
+      <div id="memoryGrid" class="memory-grid"></div>
+    </div>
+  </section>
+
+  <!-- =================== SIMON PATTERN =================== -->
+  <section id="screen-game-simon" class="screen">
+    <div class="screen-header">
+      <button class="back-btn" data-back="screen-home">⬅ Back</button>
+      <h2 style="margin-top:14px;">🎵 Pattern Pop</h2>
+      <p>Watch, remember, then repeat the pattern!</p>
+    </div>
+    <div class="hud">
+      <div class="hud-chip">🏆 Level <span id="simonLevel">1</span></div>
+      <div class="hud-chip">⭐ Best <span id="simonBest">0</span></div>
+    </div>
+    <div class="game-area">
+      <div class="simon-pad-grid" id="simonGrid">
+        <button class="simon-pad p0" data-pad="0" aria-label="pink pad"></button>
+        <button class="simon-pad p1" data-pad="1" aria-label="blue pad"></button>
+        <button class="simon-pad p2" data-pad="2" aria-label="yellow pad"></button>
+        <button class="simon-pad p3" data-pad="3" aria-label="green pad"></button>
+      </div>
+      <button class="btn pink" id="simonStart">▶ Start</button>
+    </div>
+  </section>
+
+  <!-- =================== ODD ONE OUT: difficulty picker =================== -->
+  <section id="screen-picker-odd" class="screen">
+    <div class="screen-header">
+      <button class="back-btn" data-back="screen-home">⬅ Back</button>
+      <h2 style="margin-top:14px;">🔍 Odd One Out</h2>
+      <p>Spot the sticker that's different from the rest!</p>
+    </div>
+    <div class="picker-grid">
+      <button class="picker-card" data-odd-size="3"><span class="emoji">🌱</span><span class="deck-title">Easy (3×3)</span></button>
+      <button class="picker-card" data-odd-size="4"><span class="emoji">🌿</span><span class="deck-title">Medium (4×4)</span></button>
+      <button class="picker-card" data-odd-size="5"><span class="emoji">🌳</span><span class="deck-title">Hard (5×5)</span></button>
+    </div>
+  </section>
+
+  <section id="screen-game-odd" class="screen">
+    <div class="screen-header">
+      <button class="back-btn" data-back="screen-picker-odd">⬅ Back</button>
+    </div>
+    <div class="hud">
+      <div class="hud-chip">🎯 Round <span id="oddRound">1</span></div>
+      <div class="hud-chip">⭐ Score <span id="oddScore">0</span></div>
+    </div>
+    <div class="game-area">
+      <div id="oddGrid" class="odd-grid"></div>
+    </div>
+  </section>
+
+  <!-- =================== SHAPE SORTER =================== -->
+  <section id="screen-game-sort" class="screen">
+    <div class="screen-header">
+      <button class="back-btn" data-back="screen-home">⬅ Back</button>
+      <h2 style="margin-top:14px;">🧺 Shape Sorter</h2>
+      <p>Tap a shape, then tap its matching basket!</p>
+    </div>
+    <div class="hud">
+      <div class="hud-chip">⭐ Score <span id="sortScore">0</span></div>
+    </div>
+    <div class="game-area">
+      <div class="sort-tray" id="sortTray"></div>
+      <div class="sort-bins" id="sortBins"></div>
+    </div>
+  </section>
+
+  <!-- =================== COUNT & TAP =================== -->
+  <section id="screen-game-count" class="screen">
+    <div class="screen-header">
+      <button class="back-btn" data-back="screen-home">⬅ Back</button>
+      <h2 style="margin-top:14px;">🔢 Count &amp; Tap</h2>
+      <p>Count the pictures, then tap the right number!</p>
+    </div>
+    <div class="hud">
+      <div class="hud-chip">⭐ Score <span id="countScore">0</span></div>
+    </div>
+    <div class="game-area">
+      <div class="count-display" id="countDisplay"></div>
+      <div class="count-choices" id="countChoices"></div>
+    </div>
+  </section>
+
+  <!-- =================== FLASHCARD DECK PICKER =================== -->
+  <section id="screen-picker-decks" class="screen">
+    <div class="screen-header">
+      <button class="back-btn" data-back="screen-home">⬅ Back</button>
+      <h2 style="margin-top:14px;">📚 Choose a Deck</h2>
+      <p>Tap a subject to start flipping cards!</p>
+    </div>
+    <div class="picker-grid" id="deckPickerGrid"></div>
+  </section>
+
+  <section id="screen-flashcards" class="screen">
+    <div class="screen-header">
+      <button class="back-btn" data-back="screen-picker-decks">⬅ Back</button>
+      <h2 id="deckTitle" style="margin-top:14px;"></h2>
+    </div>
+    <div class="game-area">
+      <div class="flashcard-wrap">
+        <div class="flashcard" id="flashcard">
+          <div class="flashcard-inner">
+            <div class="flashcard-face front"><span id="cardFront"></span></div>
+            <div class="flashcard-face back">
+              <div class="answer" id="cardBack"></div>
+              <div class="fact" id="cardFact"></div>
+            </div>
+          </div>
+        </div>
+        <p class="flip-hint">👆 Tap the card to flip it</p>
+        <div class="deck-nav">
+          <button class="nav-round" id="cardPrev" aria-label="previous card">⬅</button>
+          <span class="deck-progress" id="cardProgress">1 / 10</span>
+          <button class="nav-round" id="cardNext" aria-label="next card">➡</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== QUIZ DECK PICKER =================== -->
+  <section id="screen-picker-quiz" class="screen">
+    <div class="screen-header">
+      <button class="back-btn" data-back="screen-home">⬅ Back</button>
+      <h2 style="margin-top:14px;">❓ Quiz Time</h2>
+      <p>Pick a subject to test what you know!</p>
+    </div>
+    <div class="picker-grid" id="quizPickerGrid"></div>
+  </section>
+
+  <section id="screen-quiz" class="screen">
+    <div class="screen-header">
+      <button class="back-btn" data-back="screen-picker-quiz">⬅ Back</button>
+    </div>
+    <div class="hud">
+      <div class="hud-chip">❓ <span id="quizIndex">1</span>/<span id="quizTotal">10</span></div>
+      <div class="hud-chip">⭐ Score <span id="quizScore">0</span></div>
+    </div>
+    <div class="game-area">
+      <div class="count-display" id="quizPrompt" style="font-size:4rem;"></div>
+      <div class="quiz-options" id="quizOptions"></div>
+    </div>
+  </section>
+
+</div>
+
+<!-- Ziggy mascot -->
+<div class="mascot" id="mascot">
+  <div class="star-shape">
+    <div class="eye left"></div>
+    <div class="eye right"></div>
+    <div class="mouth"></div>
+  </div>
+</div>
+
+<!-- Result modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-card">
+    <div class="big-emoji" id="modalEmoji">🎉</div>
+    <h2 id="modalTitle">Great job!</h2>
+    <p id="modalBody">You did it!</p>
+    <div class="btn-row">
+      <button class="btn secondary" id="modalHome">🏠 Home</button>
+      <button class="btn pink" id="modalAgain">🔁 Play Again</button>
+    </div>
+  </div>
+</div>
+
+<!-- Install banner -->
+<div class="install-banner" id="installBanner">
+  <span style="font-size:1.6rem;">📲</span>
+  <div class="txt">Add Brain Garden to your home screen for offline play!</div>
+  <button class="dismiss" id="installDismiss">Not now</button>
+  <button class="install" id="installBtn">Install</button>
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+<script src="games.js"></script>
+<script src="flashcards.js"></script>
+</body>
+</html>
