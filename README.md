@@ -6,16 +6,24 @@ works fully offline once installed as a PWA.
 
 ## What's inside
 
-**5 brain games**
-- 🧠 Memory Match — flip-and-match pairs (3 difficulty levels)
-- 🎵 Pattern Pop — Simon-style sequence memory
-- 🔍 Odd One Out — spot-the-different-sticker attention game
-- 🧺 Shape Sorter — match shapes to their basket
-- 🔢 Count & Tap — counting practice
+**8 brain games, each with 10 levels (ages ~3 to 10)** so there's always a
+next challenge instead of the same difficulty on repeat:
+- 🧠 Memory Match — flip-and-match pairs; later levels add a countdown timer
+- 🎵 Pattern Pop — Simon-style sequence memory (climbs infinitely, not capped at 10)
+- 🔍 Odd One Out — spot-the-different-sticker attention game; later levels add a per-round timer
+- 🧺 Shape Sorter — match shapes to their basket; later levels add a countdown
+- 🔢 Count & Tap — counting, then bridges into visual addition/subtraction/multiplication
+- 🧮 **Math Quiz** — real arithmetic: adding/subtracting, times tables, division, and two-step word problems
+- 🔗 **Number Patterns** — fill in the missing number in a sequence (skip-counting, counting down, doubling patterns)
+- 🔤 **Word Scramble** — tap letters in order to spell words, from 3-letter words up to "MULTIPLICATION"
 
-**10 flashcard decks** (Animals, Fruits & Veggies, Colors & Shapes, Numbers,
+Every level records a 1-3 star best score locally, and the next level
+unlocks only once the current one is passed — so progress is visible and
+kids have a reason to come back.
+
+**13 flashcard decks** (Animals, Fruits & Veggies, Colors & Shapes, Numbers,
 Alphabet, Body Parts, Vehicles, Science & Space, Countries & Flags, Jobs &
-Helpers) in two modes:
+Helpers, **Times Tables, World Capitals, Science Explorers**) in two modes:
 - 📚 Browse — flip cards to reveal the answer + a fun fact
 - ❓ Quiz — multiple-choice quiz for each deck
 
@@ -50,10 +58,15 @@ After installing, the app opens full-screen with its own icon and works
 
 ## Updating content later
 
-- All flashcard/game content lives in `data.js` — add more emoji entries or
-  whole new decks there without touching any other file.
+- All flashcard/game content, and every level's difficulty settings, live
+  in `data.js` — add more emoji entries, whole new decks, or extra levels
+  there without touching any other file.
+- `levels.js` holds the shared level-picker/progress system used by every
+  leveled game. `games.js` has Memory Match, Pattern Pop, Odd One Out,
+  Shape Sorter and Count & Tap. `mathgames.js` has Math Quiz, Number
+  Patterns and Word Scramble.
 - If you edit any cached file, bump `CACHE_NAME` in `service-worker.js`
-  (e.g. `brain-garden-v2`) so returning visitors get the fresh version
+  (e.g. `brain-garden-v3`) so returning visitors get the fresh version
   instead of an old cached copy.
 
 ## Browser support

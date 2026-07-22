@@ -175,6 +175,62 @@ const FLASHCARD_DECKS = {
       { q: "🧑‍🚀", a: "Astronaut", fact: "Astronauts travel to outer space." },
       { q: "👩‍🔬", a: "Scientist", fact: "Scientists explore and discover new things." }
     ]
+  },
+  timesTables: {
+    title: "Times Tables",
+    icon: "✖️",
+    color: "#5B8DEF",
+    ageHint: "6-10",
+    cards: [
+      { q: "2 × 3", a: "6", fact: "2 × 3 means 2 groups of 3." },
+      { q: "3 × 3", a: "9", fact: "3 × 3 is the same as 3 + 3 + 3." },
+      { q: "4 × 2", a: "8", fact: "Multiplying by 2 means doubling!" },
+      { q: "5 × 5", a: "25", fact: "5 times tables always end in 0 or 5." },
+      { q: "6 × 2", a: "12", fact: "6 × 2 is double 6." },
+      { q: "7 × 3", a: "21", fact: "7 × 3 is the same as 7+7+7." },
+      { q: "8 × 2", a: "16", fact: "Doubling 8 gives you 16." },
+      { q: "9 × 3", a: "27", fact: "9 times tables: the digits always add up to 9!" },
+      { q: "10 × 4", a: "40", fact: "Multiplying by 10 just adds a zero." },
+      { q: "6 × 6", a: "36", fact: "6 × 6 is a 'square number'." },
+      { q: "7 × 7", a: "49", fact: "7 × 7 is also a square number." },
+      { q: "8 × 8", a: "64", fact: "8 × 8 = 64, a favorite in chess boards (8×8 squares)!" }
+    ]
+  },
+  worldCapitals: {
+    title: "World Capitals",
+    icon: "🗺️",
+    color: "#3FA7A0",
+    ageHint: "7-10",
+    cards: [
+      { q: "🇺🇸", a: "Washington, D.C.", fact: "Washington, D.C. is not part of any US state." },
+      { q: "🇬🇧", a: "London", fact: "London sits on the River Thames." },
+      { q: "🇫🇷", a: "Paris", fact: "Paris is nicknamed 'The City of Light'." },
+      { q: "🇮🇳", a: "New Delhi", fact: "New Delhi is part of India's capital territory." },
+      { q: "🇯🇵", a: "Tokyo", fact: "Tokyo is one of the most populated cities on Earth." },
+      { q: "🇨🇦", a: "Ottawa", fact: "Ottawa is Canada's capital, not Toronto!" },
+      { q: "🇦🇺", a: "Canberra", fact: "Canberra was specially built to be Australia's capital." },
+      { q: "🇪🇬", a: "Cairo", fact: "Cairo sits along the Nile, the longest river in the world." },
+      { q: "🇮🇹", a: "Rome", fact: "Rome is home to the ancient Colosseum." },
+      { q: "🇩🇪", a: "Berlin", fact: "Berlin was once divided by a famous wall." }
+    ]
+  },
+  scienceAdvanced: {
+    title: "Science Explorers",
+    icon: "🔬",
+    color: "#8A6FD4",
+    ageHint: "7-10",
+    cards: [
+      { q: "🦴", a: "Skeleton", fact: "The human body has 206 bones." },
+      { q: "🫁", a: "Lungs", fact: "Lungs bring oxygen into your blood." },
+      { q: "🌡️", a: "Thermometer", fact: "Thermometers measure temperature." },
+      { q: "🔭", a: "Telescope", fact: "Telescopes let us see faraway stars and planets." },
+      { q: "🧪", a: "Test Tube", fact: "Scientists use test tubes to mix and test liquids." },
+      { q: "⚛️", a: "Atom", fact: "Everything around you is made of tiny atoms." },
+      { q: "🌪️", a: "Tornado", fact: "Tornadoes are spinning columns of very fast wind." },
+      { q: "🧬", a: "DNA", fact: "DNA carries the instructions that make you, you!" },
+      { q: "🪨", a: "Rock Cycle", fact: "Rocks slowly change form over millions of years." },
+      { q: "🔋", a: "Battery", fact: "Batteries store energy as chemicals inside them." }
+    ]
   }
 };
 
@@ -185,3 +241,182 @@ const GAME_EMOJI = {
   sortShapes: ["🔴","🟦","🔺","🟢","🟨","🟣","⭐","🟠"],
   countObjects: ["🍎","🐶","⭐","🎈","🐝","🌸","🍩","🦋"]
 };
+
+/* ===================================================================
+   LEVEL PROGRESSIONS
+   Every leveled game climbs from ages ~4 to ~10 across 10 stages, so a
+   kid always has a next, slightly-harder level to reach for instead of
+   replaying the same difficulty.
+   =================================================================== */
+
+const MEMORY_LEVELS = [
+  { pairs: 3,  cols: 3, timeLimit: null, ages: "4-5" },
+  { pairs: 4,  cols: 4, timeLimit: null, ages: "4-5" },
+  { pairs: 5,  cols: 4, timeLimit: null, ages: "5-6" },
+  { pairs: 6,  cols: 4, timeLimit: 70,   ages: "5-6" },
+  { pairs: 6,  cols: 4, timeLimit: 50,   ages: "6-7" },
+  { pairs: 8,  cols: 4, timeLimit: 80,   ages: "6-7" },
+  { pairs: 8,  cols: 4, timeLimit: 60,   ages: "7-8" },
+  { pairs: 10, cols: 5, timeLimit: 90,   ages: "7-8" },
+  { pairs: 10, cols: 5, timeLimit: 70,   ages: "8-9" },
+  { pairs: 12, cols: 6, timeLimit: 100,  ages: "9-10" }
+];
+
+const ODD_LEVELS = [
+  { size: 3, rounds: 6,  timeLimit: null, ages: "4-5" },
+  { size: 3, rounds: 8,  timeLimit: null, ages: "4-5" },
+  { size: 4, rounds: 8,  timeLimit: null, ages: "5-6" },
+  { size: 4, rounds: 8,  timeLimit: 12,   ages: "5-6" },
+  { size: 4, rounds: 10, timeLimit: 10,   ages: "6-7" },
+  { size: 5, rounds: 10, timeLimit: 10,   ages: "6-7" },
+  { size: 5, rounds: 10, timeLimit: 8,    ages: "7-8" },
+  { size: 5, rounds: 12, timeLimit: 7,    ages: "7-8" },
+  { size: 6, rounds: 12, timeLimit: 7,    ages: "8-9" },
+  { size: 6, rounds: 14, timeLimit: 6,    ages: "9-10" }
+];
+
+const SORT_LEVELS = [
+  { pieces: 3, timeLimit: null, ages: "4-5" },
+  { pieces: 4, timeLimit: null, ages: "4-5" },
+  { pieces: 5, timeLimit: null, ages: "5-6" },
+  { pieces: 5, timeLimit: 45,   ages: "5-6" },
+  { pieces: 6, timeLimit: 45,   ages: "6-7" },
+  { pieces: 6, timeLimit: 35,   ages: "6-7" },
+  { pieces: 7, timeLimit: 40,   ages: "7-8" },
+  { pieces: 7, timeLimit: 30,   ages: "7-8" },
+  { pieces: 8, timeLimit: 35,   ages: "8-9" },
+  { pieces: 8, timeLimit: 25,   ages: "9-10" }
+];
+
+/* Count & Tap doubles as an early bridge into visual math: later levels
+   show simple addition/subtraction/multiplication scenes instead of a
+   flat count. */
+const COUNT_LEVELS = [
+  { mode: "count", max: 5,  ages: "3-4" },
+  { mode: "count", max: 10, ages: "4-5" },
+  { mode: "count", max: 15, ages: "5-6" },
+  { mode: "add",   max: 10, ages: "5-6" },
+  { mode: "add",   max: 20, ages: "6-7" },
+  { mode: "sub",   max: 15, ages: "6-7" },
+  { mode: "sub",   max: 20, ages: "7-8" },
+  { mode: "mult",  max: 5,  ages: "7-8" },
+  { mode: "mixed", max: 30, ages: "8-9" },
+  { mode: "mixed", max: 50, ages: "9-10" }
+];
+
+/* Math Quiz: real arithmetic, climbing from counting up to two-step
+   word problems. Each level's `gen` returns { text, answer }. */
+const MATH_LEVELS = [
+  { label: "Adding to 5",        ages: "4-5",  gen: () => genArith(1, 4, "+") },
+  { label: "Adding to 10",       ages: "5-6",  gen: () => genArith(1, 9, "+") },
+  { label: "Subtracting to 10",  ages: "5-6",  gen: () => genArith(1, 10, "-") },
+  { label: "Add & Subtract 20",  ages: "6-7",  gen: () => genArith(1, 20, Math.random() < 0.5 ? "+" : "-") },
+  { label: "Times Tables 2-5",   ages: "7-8",  gen: () => genMult(2, 5) },
+  { label: "Times Tables 2-10",  ages: "7-8",  gen: () => genMult(2, 10) },
+  { label: "Simple Division",    ages: "8-9",  gen: () => genDiv(2, 10) },
+  { label: "Mixed Up to 50",     ages: "8-9",  gen: () => genMixed(50) },
+  { label: "Word Problems",      ages: "9-10", gen: () => genWordProblem(20) },
+  { label: "Big Word Problems",  ages: "9-10", gen: () => genWordProblem(100) }
+];
+
+function genArith(min, max, op){
+  let a = randInt(min, max), b = randInt(min, max);
+  if (op === "-" && b > a) [a, b] = [b, a];
+  const answer = op === "+" ? a + b : a - b;
+  return { text: `${a} ${op} ${b} = ?`, answer };
+}
+function genMult(min, max){
+  const a = randInt(min, max), b = randInt(2, 10);
+  return { text: `${a} × ${b} = ?`, answer: a * b };
+}
+function genDiv(min, max){
+  const b = randInt(2, max);
+  const answer = randInt(1, 10);
+  const a = b * answer;
+  return { text: `${a} ÷ ${b} = ?`, answer };
+}
+function genMixed(cap){
+  const ops = ["+", "-", "×"];
+  const op = ops[randInt(0, 2)];
+  if (op === "×"){
+    const a = randInt(2, 9), b = randInt(2, 9);
+    return { text: `${a} × ${b} = ?`, answer: a * b };
+  }
+  let a = randInt(1, cap), b = randInt(1, cap);
+  if (op === "-" && b > a) [a, b] = [b, a];
+  return { text: `${a} ${op} ${b} = ?`, answer: op === "+" ? a + b : a - b };
+}
+const WORD_PROBLEM_NAMES = ["Sam","Mia","Leo","Zara","Omar","Ava","Ravi","Elle"];
+const WORD_PROBLEM_ITEMS = ["apples","stickers","marbles","coins","balloons","crayons","toy cars","cookies"];
+function genWordProblem(cap){
+  const name = WORD_PROBLEM_NAMES[randInt(0, WORD_PROBLEM_NAMES.length - 1)];
+  const item = WORD_PROBLEM_ITEMS[randInt(0, WORD_PROBLEM_ITEMS.length - 1)];
+  const templates = [
+    () => {
+      const a = randInt(5, cap), b = randInt(1, Math.min(a, cap));
+      return { text: `${name} has ${a} ${item}. ${name} gives away ${b}. How many are left?`, answer: a - b };
+    },
+    () => {
+      const a = randInt(1, cap / 2), b = randInt(1, cap / 2);
+      return { text: `${name} has ${a} ${item} and finds ${b} more. How many ${item} now?`, answer: a + b };
+    },
+    () => {
+      const groups = randInt(2, 5), each = randInt(2, Math.max(2, Math.floor(cap / groups)));
+      return { text: `${name} has ${groups} bags with ${each} ${item} in each. How many ${item} in total?`, answer: groups * each };
+    }
+  ];
+  return templates[randInt(0, templates.length - 1)]();
+}
+
+/* Number Patterns: fill in the missing number in a sequence. Each level
+   returns a full sequence array plus the index that should be blanked. */
+const SEQUENCE_LEVELS = [
+  { label: "Counting by 1s (to 10)",  ages: "4-5",  gen: () => genSequence(1, 1, 1, 10) },
+  { label: "Counting by 1s (to 20)",  ages: "5-6",  gen: () => genSequence(1, 1, 1, 20) },
+  { label: "Counting by 2s",          ages: "5-6",  gen: () => genSequence(2, 2, 0, 20) },
+  { label: "Counting by 5s",          ages: "6-7",  gen: () => genSequence(5, 5, 0, 50) },
+  { label: "Counting by 10s",         ages: "6-7",  gen: () => genSequence(10, 10, 0, 100) },
+  { label: "Counting Down",           ages: "7-8",  gen: () => genSequence(-1, -1, 5, 20) },
+  { label: "Skip Counting by 3s",     ages: "7-8",  gen: () => genSequence(3, 3, 0, 30) },
+  { label: "Skip Counting by 4s",     ages: "8-9",  gen: () => genSequence(4, 4, 0, 40) },
+  { label: "Doubling Patterns",       ages: "8-9",  gen: () => genSequenceMult(2, 1, 6) },
+  { label: "Mixed Patterns",          ages: "9-10", gen: () => genSequenceMixed() }
+];
+function genSequence(stepMin, stepMax, min, max){
+  const step = randInt(stepMin, stepMax);
+  const len = 5;
+  const maxStart = Math.max(min, max - step * (len - 1));
+  const start = randInt(min, Math.max(min, maxStart));
+  const seq = Array.from({ length: len }, (_, i) => start + step * i);
+  const blankIndex = randInt(1, len - 2);
+  return { seq, blankIndex, answer: seq[blankIndex] };
+}
+function genSequenceMult(factor, start, len){
+  const seq = [start];
+  for (let i = 1; i < len; i++) seq.push(seq[i - 1] * factor);
+  const blankIndex = randInt(1, len - 2);
+  return { seq, blankIndex, answer: seq[blankIndex] };
+}
+function genSequenceMixed(){
+  const step = randInt(2, 6);
+  const start = randInt(1, 10);
+  const len = 5;
+  const seq = Array.from({ length: len }, (_, i) => start + step * i);
+  const blankIndex = randInt(2, len - 2);
+  return { seq, blankIndex, answer: seq[blankIndex] };
+}
+
+/* Word Scramble: 10 word banks climbing from 3-letter to tricky
+   GK-flavoured vocabulary. */
+const WORD_LEVELS = [
+  { ages: "4-5",  words: ["CAT","DOG","SUN","HAT","BAT","CUP","BUS","BOX"] },
+  { ages: "4-5",  words: ["FROG","LION","STAR","FISH","MOON","DUCK","CAKE"] },
+  { ages: "5-6",  words: ["TIGER","ZEBRA","HAPPY","APPLE","HOUSE","WATER"] },
+  { ages: "5-6",  words: ["ROCKET","RABBIT","YELLOW","PLANET","GARDEN"] },
+  { ages: "6-7",  words: ["ELEPHANT","DINOSAUR","RAINBOW","BICYCLE"] },
+  { ages: "6-7",  words: ["PENGUIN","CRAYON","JUNGLE","OCTOPUS"] },
+  { ages: "7-8",  words: ["ASTRONAUT","TELESCOPE","VOLCANO","CONTINENT"] },
+  { ages: "7-8",  words: ["DICTIONARY","CALCULATOR","MOUNTAIN"] },
+  { ages: "8-9",  words: ["TEMPERATURE","MULTIPLY","LIBRARY","SCIENTIST"] },
+  { ages: "9-10", words: ["MULTIPLICATION","GEOGRAPHY","MICROSCOPE"] }
+];

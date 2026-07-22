@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
 <title>Ziggy's Brain Garden — Games &amp; Flashcards for Kids</title>
-<meta name="description" content="Fun brain puzzle games and general knowledge flashcards for kids ages 3-8. Play memory match, pattern recall, odd-one-out and more!">
+<meta name="description" content="Brain puzzle games, math quizzes and general knowledge flashcards for kids ages 3-10, with 10 levels per game so there's always a next challenge.">
 
 <!-- PWA -->
 <meta name="theme-color" content="#9B72CF">
@@ -41,7 +41,7 @@
   <!-- =================== HOME =================== -->
   <section id="screen-home" class="screen active">
     <div class="screen-header">
-      <p>Pick a game or a flashcard deck to explore!</p>
+      <p>Pick a game or a flashcard deck. Every game has 10 levels — ages 3 to 10!</p>
     </div>
 
     <span class="section-eyebrow">🧩 Brain Games</span>
@@ -61,26 +61,45 @@
         <span class="label">Odd One Out</span>
         <span class="sub">Attention</span>
       </button>
-      <button class="sticker c4" data-nav="game-sort">
+      <button class="sticker c4" data-nav="picker-sort">
         <span class="emoji">🧺</span>
         <span class="label">Shape Sorter</span>
         <span class="sub">Thinking</span>
       </button>
-      <button class="sticker c5" data-nav="game-count">
+      <button class="sticker c5" data-nav="picker-count">
         <span class="emoji">🔢</span>
         <span class="label">Count &amp; Tap</span>
         <span class="sub">Numbers</span>
       </button>
     </div>
 
+    <span class="section-eyebrow">➕ Math &amp; Logic</span>
+    <div class="sticker-grid">
+      <button class="sticker c6" data-nav="picker-math">
+        <span class="emoji">🧮</span>
+        <span class="label">Math Quiz</span>
+        <span class="sub">Calculations</span>
+      </button>
+      <button class="sticker c2" data-nav="picker-sequence">
+        <span class="emoji">🔗</span>
+        <span class="label">Number Patterns</span>
+        <span class="sub">Logic</span>
+      </button>
+      <button class="sticker c1" data-nav="picker-scramble">
+        <span class="emoji">🔤</span>
+        <span class="label">Word Scramble</span>
+        <span class="sub">Spelling</span>
+      </button>
+    </div>
+
     <span class="section-eyebrow">📚 Flashcard Decks</span>
     <div class="sticker-grid">
-      <button class="sticker c6" data-nav="picker-decks">
+      <button class="sticker c3" data-nav="picker-decks">
         <span class="emoji">🗂️</span>
         <span class="label">Browse Cards</span>
         <span class="sub">All Subjects</span>
       </button>
-      <button class="sticker c2" data-nav="picker-quiz">
+      <button class="sticker c4" data-nav="picker-quiz">
         <span class="emoji">❓</span>
         <span class="label">Quiz Time</span>
         <span class="sub">Test Yourself</span>
@@ -88,18 +107,14 @@
     </div>
   </section>
 
-  <!-- =================== MEMORY: difficulty picker =================== -->
+  <!-- =================== MEMORY: level picker =================== -->
   <section id="screen-picker-memory" class="screen">
     <div class="screen-header">
       <button class="back-btn" data-back="screen-home">⬅ Back</button>
       <h2 style="margin-top:14px;">🧠 Memory Match</h2>
-      <p>Flip the cards and find matching pairs!</p>
+      <p>Flip the cards and find matching pairs — 10 levels to climb!</p>
     </div>
-    <div class="picker-grid">
-      <button class="picker-card" data-memory-size="2x4"><span class="emoji">🌱</span><span class="deck-title">Easy (8 cards)</span></button>
-      <button class="picker-card" data-memory-size="3x4"><span class="emoji">🌿</span><span class="deck-title">Medium (12 cards)</span></button>
-      <button class="picker-card" data-memory-size="4x4"><span class="emoji">🌳</span><span class="deck-title">Hard (16 cards)</span></button>
-    </div>
+    <div class="level-grid" id="memoryLevelGrid"></div>
   </section>
 
   <section id="screen-game-memory" class="screen">
@@ -107,8 +122,10 @@
       <button class="back-btn" data-back="screen-picker-memory">⬅ Back</button>
     </div>
     <div class="hud">
+      <div class="hud-chip">🏅 Lv <span id="memoryLevelNum">1</span></div>
       <div class="hud-chip">🔄 <span id="memoryMoves">0</span> moves</div>
       <div class="hud-chip">✅ <span id="memoryPairs">0</span>/<span id="memoryTotalPairs">0</span> pairs</div>
+      <div class="hud-chip timer-chip" id="memoryTimerChip" hidden>⏱ <span id="memoryTimer">0</span>s</div>
     </div>
     <div class="game-area">
       <div id="memoryGrid" class="memory-grid"></div>
@@ -120,7 +137,7 @@
     <div class="screen-header">
       <button class="back-btn" data-back="screen-home">⬅ Back</button>
       <h2 style="margin-top:14px;">🎵 Pattern Pop</h2>
-      <p>Watch, remember, then repeat the pattern!</p>
+      <p>Watch, remember, then repeat the pattern! It keeps growing.</p>
     </div>
     <div class="hud">
       <div class="hud-chip">🏆 Level <span id="simonLevel">1</span></div>
@@ -137,18 +154,14 @@
     </div>
   </section>
 
-  <!-- =================== ODD ONE OUT: difficulty picker =================== -->
+  <!-- =================== ODD ONE OUT: level picker =================== -->
   <section id="screen-picker-odd" class="screen">
     <div class="screen-header">
       <button class="back-btn" data-back="screen-home">⬅ Back</button>
       <h2 style="margin-top:14px;">🔍 Odd One Out</h2>
       <p>Spot the sticker that's different from the rest!</p>
     </div>
-    <div class="picker-grid">
-      <button class="picker-card" data-odd-size="3"><span class="emoji">🌱</span><span class="deck-title">Easy (3×3)</span></button>
-      <button class="picker-card" data-odd-size="4"><span class="emoji">🌿</span><span class="deck-title">Medium (4×4)</span></button>
-      <button class="picker-card" data-odd-size="5"><span class="emoji">🌳</span><span class="deck-title">Hard (5×5)</span></button>
-    </div>
+    <div class="level-grid" id="oddLevelGrid"></div>
   </section>
 
   <section id="screen-game-odd" class="screen">
@@ -156,23 +169,34 @@
       <button class="back-btn" data-back="screen-picker-odd">⬅ Back</button>
     </div>
     <div class="hud">
+      <div class="hud-chip">🏅 Lv <span id="oddLevelNum">1</span></div>
       <div class="hud-chip">🎯 Round <span id="oddRound">1</span></div>
       <div class="hud-chip">⭐ Score <span id="oddScore">0</span></div>
+      <div class="hud-chip timer-chip" id="oddTimerChip" hidden>⏱ <span id="oddTimer">0</span>s</div>
     </div>
     <div class="game-area">
       <div id="oddGrid" class="odd-grid"></div>
     </div>
   </section>
 
-  <!-- =================== SHAPE SORTER =================== -->
-  <section id="screen-game-sort" class="screen">
+  <!-- =================== SHAPE SORTER: level picker =================== -->
+  <section id="screen-picker-sort" class="screen">
     <div class="screen-header">
       <button class="back-btn" data-back="screen-home">⬅ Back</button>
       <h2 style="margin-top:14px;">🧺 Shape Sorter</h2>
       <p>Tap a shape, then tap its matching basket!</p>
     </div>
+    <div class="level-grid" id="sortLevelGrid"></div>
+  </section>
+
+  <section id="screen-game-sort" class="screen">
+    <div class="screen-header">
+      <button class="back-btn" data-back="screen-picker-sort">⬅ Back</button>
+    </div>
     <div class="hud">
+      <div class="hud-chip">🏅 Lv <span id="sortLevelNum">1</span></div>
       <div class="hud-chip">⭐ Score <span id="sortScore">0</span></div>
+      <div class="hud-chip timer-chip" id="sortTimerChip" hidden>⏱ <span id="sortTimer">0</span>s</div>
     </div>
     <div class="game-area">
       <div class="sort-tray" id="sortTray"></div>
@@ -180,19 +204,107 @@
     </div>
   </section>
 
-  <!-- =================== COUNT & TAP =================== -->
-  <section id="screen-game-count" class="screen">
+  <!-- =================== COUNT & TAP: level picker =================== -->
+  <section id="screen-picker-count" class="screen">
     <div class="screen-header">
       <button class="back-btn" data-back="screen-home">⬅ Back</button>
       <h2 style="margin-top:14px;">🔢 Count &amp; Tap</h2>
-      <p>Count the pictures, then tap the right number!</p>
+      <p>Count the pictures — later levels add addition, subtraction &amp; more!</p>
+    </div>
+    <div class="level-grid" id="countLevelGrid"></div>
+  </section>
+
+  <section id="screen-game-count" class="screen">
+    <div class="screen-header">
+      <button class="back-btn" data-back="screen-picker-count">⬅ Back</button>
     </div>
     <div class="hud">
+      <div class="hud-chip">🏅 Lv <span id="countLevelNum">1</span></div>
       <div class="hud-chip">⭐ Score <span id="countScore">0</span></div>
     </div>
     <div class="game-area">
       <div class="count-display" id="countDisplay"></div>
       <div class="count-choices" id="countChoices"></div>
+    </div>
+  </section>
+
+  <!-- =================== MATH QUIZ: level picker =================== -->
+  <section id="screen-picker-math" class="screen">
+    <div class="screen-header">
+      <button class="back-btn" data-back="screen-home">⬅ Back</button>
+      <h2 style="margin-top:14px;">🧮 Math Quiz</h2>
+      <p>Addition, subtraction, times tables, division &amp; word problems!</p>
+    </div>
+    <div class="level-grid" id="mathLevelGrid"></div>
+  </section>
+
+  <section id="screen-game-math" class="screen">
+    <div class="screen-header">
+      <button class="back-btn" data-back="screen-picker-math">⬅ Back</button>
+    </div>
+    <div class="hud">
+      <div class="hud-chip">🏅 Lv <span id="mathLevelNum">1</span></div>
+      <div class="hud-chip">❓ <span id="mathIndex">1</span>/<span id="mathTotal">8</span></div>
+      <div class="hud-chip">⭐ Score <span id="mathScore">0</span></div>
+    </div>
+    <div class="game-area">
+      <div class="count-display equation" id="mathQuestion" style="font-size:2rem;"></div>
+      <div class="quiz-options" id="mathOptions"></div>
+    </div>
+  </section>
+
+  <!-- =================== NUMBER PATTERNS: level picker =================== -->
+  <section id="screen-picker-sequence" class="screen">
+    <div class="screen-header">
+      <button class="back-btn" data-back="screen-home">⬅ Back</button>
+      <h2 style="margin-top:14px;">🔗 Number Patterns</h2>
+      <p>Figure out what number is missing from the pattern!</p>
+    </div>
+    <div class="level-grid" id="sequenceLevelGrid"></div>
+  </section>
+
+  <section id="screen-game-sequence" class="screen">
+    <div class="screen-header">
+      <button class="back-btn" data-back="screen-picker-sequence">⬅ Back</button>
+    </div>
+    <div class="hud">
+      <div class="hud-chip">🏅 Lv <span id="sequenceLevelNum">1</span></div>
+      <div class="hud-chip">❓ <span id="sequenceIndex">1</span>/<span id="sequenceTotal">8</span></div>
+      <div class="hud-chip">⭐ Score <span id="sequenceScore">0</span></div>
+    </div>
+    <div class="game-area">
+      <div class="sequence-row" id="sequenceRow"></div>
+      <div class="count-choices" id="sequenceChoices"></div>
+    </div>
+  </section>
+
+  <!-- =================== WORD SCRAMBLE: level picker =================== -->
+  <section id="screen-picker-scramble" class="screen">
+    <div class="screen-header">
+      <button class="back-btn" data-back="screen-home">⬅ Back</button>
+      <h2 style="margin-top:14px;">🔤 Word Scramble</h2>
+      <p>Tap the letters in the right order to spell the word!</p>
+    </div>
+    <div class="level-grid" id="scrambleLevelGrid"></div>
+  </section>
+
+  <section id="screen-game-scramble" class="screen">
+    <div class="screen-header">
+      <button class="back-btn" data-back="screen-picker-scramble">⬅ Back</button>
+    </div>
+    <div class="hud">
+      <div class="hud-chip">🏅 Lv <span id="scrambleLevelNum">1</span></div>
+      <div class="hud-chip">❓ <span id="scrambleIndex">1</span>/<span id="scrambleTotal">6</span></div>
+      <div class="hud-chip">⭐ Score <span id="scrambleScore">0</span></div>
+    </div>
+    <div class="game-area">
+      <div class="scramble-hint" id="scrambleHint"></div>
+      <div class="answer-strip" id="answerStrip"></div>
+      <div class="letter-tray" id="letterTray"></div>
+      <div class="btn-row">
+        <button class="btn secondary" id="scrambleClear">↩ Clear</button>
+        <button class="btn yellow" id="scrambleHintBtn">💡 Hint</button>
+      </div>
     </div>
   </section>
 
@@ -290,7 +402,9 @@
 
 <script src="data.js"></script>
 <script src="app.js"></script>
+<script src="levels.js"></script>
 <script src="games.js"></script>
+<script src="mathgames.js"></script>
 <script src="flashcards.js"></script>
 </body>
 </html>

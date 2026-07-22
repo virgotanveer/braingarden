@@ -114,20 +114,26 @@ const App = (() => {
   const modalHome = document.getElementById("modalHome");
   const modalAgain = document.getElementById("modalAgain");
   let againCallback = null;
+  let homeCallback = null;
 
-  function showModal({ emoji = "🎉", title = "Great job!", body = "", stars = 0, onAgain = null }){
+  function showModal({ emoji = "🎉", title = "Great job!", body = "", stars = 0, onAgain = null, onHome = null, homeLabel = "🏠 Home", againLabel = "🔁 Play Again" }){
     modalEmoji.textContent = emoji;
     modalTitle.textContent = title;
     modalBody.textContent = body;
+    modalHome.textContent = homeLabel;
+    modalAgain.textContent = againLabel;
     if (stars > 0){ addStars(stars); confettiBurst(); sfxWin(); mascotHappy(); }
+    else { mascotSad(); }
     againCallback = onAgain;
+    homeCallback = onHome;
     modalOverlay.classList.add("active");
   }
   function hideModal(){ modalOverlay.classList.remove("active"); }
 
   modalHome.addEventListener("click", () => {
     hideModal();
-    goTo("screen-home");
+    if (typeof homeCallback === "function") homeCallback();
+    else goTo("screen-home");
   });
   modalAgain.addEventListener("click", () => {
     hideModal();
