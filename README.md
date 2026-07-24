@@ -23,13 +23,48 @@ kids have a reason to come back.
 
 **13 flashcard decks** (Animals, Fruits & Veggies, Colors & Shapes, Numbers,
 Alphabet, Body Parts, Vehicles, Science & Space, Countries & Flags, Jobs &
-Helpers, **Times Tables, World Capitals, Science Explorers**) in two modes:
+Helpers, Times Tables, World Capitals, Science Explorers) in two modes:
 - 📚 Browse — flip cards to reveal the answer + a fun fact
 - ❓ Quiz — multiple-choice quiz for each deck
+
+**🎬 A curated Video Library** — 11 hand-picked educational videos across 6
+categories (Alphabet, Counting, Shapes & Colors, Science, Animals, Healthy
+Habits), from well-established children's channels: Super Simple Songs,
+SciShow Kids, National Geographic Kids, and Sesame Street. See "About the
+Video Library" below — this is not a YouTube search, and it's worth reading
+before you deploy.
 
 Kids earn ⭐ stars for completing games/quizzes, saved locally on the device.
 A little star mascot ("Ziggy") reacts to right/wrong answers, and everything
 is chunky-button, big-emoji, easy-to-tap for small hands.
+
+## About the Video Library — please read before deploying
+
+Every video is a **specific, individually chosen YouTube video ID** hardcoded
+in `data.js` — there is no search box, no YouTube Data API call, and no
+"related videos" browsing inside the app. This was a deliberate choice: a
+live search or API-driven feed could surface anything matching a keyword,
+which isn't acceptable for a young child's app. A short whitelist that a
+human has actually looked at is the safer trade-off, even though it means
+fewer videos.
+
+Some technical choices that reduce (but can't eliminate) the chance of a
+child wandering off to unrelated content:
+- Embeds use `youtube-nocookie.com`, which reduces tracking and limits
+  YouTube's end-of-video suggestions to the same channel rather than the
+  wider platform.
+- The player screen tears down the video (removes the iframe) the instant
+  the "Back" button is tapped, so nothing keeps playing in the background.
+- A short "we hand-picked these" note is shown on both the category and
+  player screens.
+
+**What this can't do:** it can't guarantee a video stays appropriate forever
+— channels occasionally get hacked, videos get re-edited, or YouTube changes
+how its player behaves. Please treat the starter list as a first draft:
+watch each video yourself before handing the app to a child, and remove
+anything you're not comfortable with. If you add more videos later, follow
+the same rule that was used here — pick one specific, known video from a
+channel you trust, and paste in its ID; never wire up a search query.
 
 ## Deploying to GitHub Pages
 
@@ -64,9 +99,10 @@ After installing, the app opens full-screen with its own icon and works
 - `levels.js` holds the shared level-picker/progress system used by every
   leveled game. `games.js` has Memory Match, Pattern Pop, Odd One Out,
   Shape Sorter and Count & Tap. `mathgames.js` has Math Quiz, Number
-  Patterns and Word Scramble.
+  Patterns and Word Scramble. `videos.js` renders the Video Library from
+  the `VIDEO_LIBRARY` list in `data.js`.
 - If you edit any cached file, bump `CACHE_NAME` in `service-worker.js`
-  (e.g. `brain-garden-v3`) so returning visitors get the fresh version
+  (e.g. `brain-garden-v4`) so returning visitors get the fresh version
   instead of an old cached copy.
 
 ## Browser support

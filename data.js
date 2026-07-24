@@ -234,6 +234,76 @@ const FLASHCARD_DECKS = {
   }
 };
 
+/* ===================================================================
+   VIDEO LIBRARY — hand-curated, not search-driven.
+   Every entry below was individually verified (channel + title checked
+   against the real YouTube page) before being added. Only videos from
+   well-established, reputable children's-education channels are
+   included: Super Simple Songs, SciShow Kids, National Geographic
+   Kids, and Sesame Street/Sesame Workshop.
+
+   IMPORTANT FOR WHOEVER MAINTAINS THIS APP: YouTube content can change
+   or be taken down at any time, and no automated check is perfectly
+   future-proof. Please spot-check this list yourselves before/after
+   deploying, and only add new entries the same way — a specific,
+   verified video ID from a channel you trust, never a search query.
+   =================================================================== */
+const VIDEO_LIBRARY = {
+  alphabet: {
+    title: "Alphabet & Phonics",
+    icon: "🔤",
+    color: "#FF6FA5",
+    videos: [
+      { id: "vD98OvvDNEs", title: "The Alphabet Song", channel: "Super Simple Songs" },
+      { id: "kDdg2M1_EuE", title: "The Alphabet Is So Much Fun", channel: "Super Simple Songs" }
+    ]
+  },
+  counting: {
+    title: "Counting & Numbers",
+    icon: "🔢",
+    color: "#4EC5F1",
+    videos: [
+      { id: "7D4K9oi7oBM", title: "Top 10 Counting Songs", channel: "Super Simple Songs" },
+      { id: "S84fcGdEULk", title: "Counting Up To 20 with the Roundabouts", channel: "Super Simple Songs" }
+    ]
+  },
+  shapesColors: {
+    title: "Shapes & Colors",
+    icon: "🔺",
+    color: "#FFC93C",
+    videos: [
+      { id: "TJhfl5vdxp4", title: "The Shape Song #1", channel: "Super Simple Songs" },
+      { id: "Asb8N0nz9OI", title: "I See Something Pink (Colors Song)", channel: "Super Simple Songs" }
+    ]
+  },
+  science: {
+    title: "Science & Nature",
+    icon: "🔬",
+    color: "#8A6FD4",
+    videos: [
+      { id: "XtSq1wcFSEI", title: "Your Body's Senses", channel: "SciShow Kids" },
+      { id: "RvRU_4XWPlw", title: "Solving Problems Around the Fort!", channel: "SciShow Kids" },
+      { id: "4VinwOQkHGg", title: "The Yuckiest Animals", channel: "SciShow Kids" }
+    ]
+  },
+  animals: {
+    title: "Amazing Animals",
+    icon: "🦁",
+    color: "#6BCB77",
+    videos: [
+      { id: "eUunYTYia3I", title: "Amazing Animals (Compilation)", channel: "National Geographic Kids" }
+    ]
+  },
+  habits: {
+    title: "Healthy Habits",
+    icon: "🪥",
+    color: "#FF9F45",
+    videos: [
+      { id: "lv7vZoR5zAI", title: "Brushy Brush Song (Animated)", channel: "Sesame Street" }
+    ]
+  }
+};
+
 /* Emoji pools reused by the mini-games (kept separate from GK content) */
 const GAME_EMOJI = {
   memory: ["🍎","🐶","🚗","⭐","🎈","🐝","🌈","🍕","🐬","🦋","🎁","🍩","🐸","🚀","🌸","🍉","🐼","🦄"],

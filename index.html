@@ -105,6 +105,15 @@
         <span class="sub">Test Yourself</span>
       </button>
     </div>
+
+    <span class="section-eyebrow">🎬 Watch &amp; Learn</span>
+    <div class="sticker-grid">
+      <button class="sticker c5" data-nav="picker-videos">
+        <span class="emoji">🎬</span>
+        <span class="label">Video Library</span>
+        <span class="sub">Curated · Kid-Safe</span>
+      </button>
+    </div>
   </section>
 
   <!-- =================== MEMORY: level picker =================== -->
@@ -368,6 +377,42 @@
     </div>
   </section>
 
+  <!-- =================== VIDEO LIBRARY =================== -->
+  <section id="screen-picker-videos" class="screen">
+    <div class="screen-header">
+      <button class="back-btn" data-back="screen-home">⬅ Back</button>
+      <h2 style="margin-top:14px;">🎬 Video Library</h2>
+      <p>A small, hand-picked collection of educational videos.</p>
+    </div>
+    <p class="safety-note">
+      🛡️ Every video here was chosen individually from well-known kids'
+      learning channels — this isn't a search, so nothing unexpected
+      should show up. Still, it's a good idea to watch together.
+    </p>
+    <div class="picker-grid" id="videoCategoryGrid"></div>
+  </section>
+
+  <section id="screen-video-list" class="screen">
+    <div class="screen-header">
+      <button class="back-btn" data-back="screen-picker-videos">⬅ Back</button>
+      <h2 id="videoCategoryTitle" style="margin-top:14px;"></h2>
+    </div>
+    <div class="video-grid" id="videoGrid"></div>
+  </section>
+
+  <section id="screen-video-player" class="screen">
+    <div class="screen-header">
+      <button class="back-btn" id="videoBackBtn">⬅ Back</button>
+      <h2 id="videoPlayerTitle" style="margin-top:14px;"></h2>
+      <p id="videoPlayerChannel" style="color:#8a7ba3;"></p>
+    </div>
+    <div class="video-player-wrap" id="videoPlayerWrap"></div>
+    <p class="safety-note">
+      🛡️ This video is playing directly from YouTube. If anything else
+      is suggested after it ends, feel free to just tap "Back".
+    </p>
+  </section>
+
 </div>
 
 <!-- Ziggy mascot -->
@@ -406,5 +451,6 @@
 <script src="games.js"></script>
 <script src="mathgames.js"></script>
 <script src="flashcards.js"></script>
+<script src="videos.js"></script>
 </body>
 </html>
