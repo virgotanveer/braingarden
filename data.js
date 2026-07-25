@@ -490,3 +490,98 @@ const WORD_LEVELS = [
   { ages: "8-9",  words: ["TEMPERATURE","MULTIPLY","LIBRARY","SCIENTIST"] },
   { ages: "9-10", words: ["MULTIPLICATION","GEOGRAPHY","MICROSCOPE"] }
 ];
+
+/* ===================================================================
+   TELLING TIME — 10 levels, analog clock rendered live in JS/CSS.
+   Levels 1-7 ask "what time is it?"; 8-10 ask elapsed-time questions.
+   =================================================================== */
+const TIME_LEVELS = [
+  { label: "O'Clock",          ages: "4-5",  genMinute: () => 0 },
+  { label: "Half Past",        ages: "5-6",  genMinute: () => [0, 30][randInt(0, 1)] },
+  { label: "Quarter Hours",    ages: "6-7",  genMinute: () => [0, 15, 30, 45][randInt(0, 3)] },
+  { label: "Five Minutes",     ages: "6-7",  genMinute: () => randInt(0, 11) * 5 },
+  { label: "Five Minutes II",  ages: "7-8",  genMinute: () => randInt(0, 11) * 5 },
+  { label: "Any Minute",       ages: "7-8",  genMinute: () => randInt(0, 59) },
+  { label: "Any Minute II",    ages: "8-9",  genMinute: () => randInt(0, 59) },
+  { label: "Elapsed Time",     ages: "8-9",  elapsed: true, deltas: [15, 30, 45] },
+  { label: "Elapsed Time II",  ages: "9-10", elapsed: true, deltas: [30, 45, 60, 90] },
+  { label: "Time Word Problems", ages: "9-10", elapsed: true, deltas: [45, 60, 90, 120] }
+];
+function formatClockTime(hour12, minute){
+  const h = hour12 === 0 ? 12 : hour12;
+  return `${h}:${String(minute).padStart(2, "0")}`;
+}
+function buildTimeChoices(hour12, minute){
+  const correct = formatClockTime(hour12, minute);
+  const choices = new Set([correct]);
+  let guard = 0;
+  while (choices.size < 4 && guard < 40){
+    const dm = [5, 10, 15, 30, -5, -10, -15, -30][randInt(0, 7)];
+    let total = ((hour12 % 12) * 60 + minute + dm + 720) % 720;
+    let h = Math.floor(total / 60), m = total % 60;
+    choices.add(formatClockTime(h, m));
+    guard++;
+  }
+  return shuffle([...choices]);
+}
+
+/* ===================================================================
+   COIN COUNTING — 10 levels. Coins are rendered as styled circles
+   (not emoji, since there's no distinct penny/nickel/dime emoji).
+   =================================================================== */
+const MONEY_LEVELS = [
+  { label: "Pennies",                  ages: "4-5",  coins: [1],            count: [2, 6] },
+  { label: "Nickels",                  ages: "5-6",  coins: [5],            count: [1, 5] },
+  { label: "Dimes",                    ages: "5-6",  coins: [10],           count: [1, 5] },
+  { label: "Pennies & Nickels",        ages: "6-7",  coins: [1, 5],         count: [2, 5] },
+  { label: "Nickels & Dimes",          ages: "6-7",  coins: [5, 10],        count: [2, 5] },
+  { label: "Pennies, Nickels & Dimes", ages: "7-8",  coins: [1, 5, 10],     count: [3, 6] },
+  { label: "Quarters",                 ages: "7-8",  coins: [25],           count: [1, 4] },
+  { label: "All Coins",                ages: "8-9",  coins: [1, 5, 10, 25], count: [3, 6] },
+  { label: "All Coins II",             ages: "8-9",  coins: [1, 5, 10, 25], count: [4, 7] },
+  { label: "Big Totals",               ages: "9-10", coins: [1, 5, 10, 25], count: [5, 8] }
+];
+const COIN_LABELS = { 1: "1¢", 5: "5¢", 10: "10¢", 25: "25¢" };
+const COIN_COLORS = { 1: "#C77B3F", 5: "#B9BEC5", 10: "#D9DCE1", 25: "#C9CDD3" };
+function formatMoney(cents){
+  return cents < 100 ? `${cents}¢` : `$${(cents / 100).toFixed(2)}`;
+}
+
+/* ===================================================================
+   LETTER & NUMBER TRACING — a free-practice deck, not a scored level
+   ladder. Kids pick any character and trace it on a canvas.
+   =================================================================== */
+const TRACE_ITEMS = [
+  ..."ABCDEFGHIJKLMNOPQRSTUVWXYZ".split(""),
+  ..."0123456789".split("")
+];
+
+/* ===================================================================
+   BADGES — checked against a snapshot of stats/levels/streak/stars.
+   See Badges.checkAll() in progress.js.
+   =================================================================== */
+const BADGES = [
+  { id: "first_steps",   icon: "🌱", name: "First Steps",   desc: "Complete your first game",        check: s => s.gamesPlayed >= 1 },
+  { id: "perfect_round",  icon: "🌟", name: "Perfect Round", desc: "Earn 3 stars on any level",       check: s => s.hasPerfectStars },
+  { id: "bookworm",       icon: "📚", name: "Bookworm",      desc: "Browse 5 flashcard decks",        check: s => s.decksBrowsed.length >= 5 },
+  { id: "math_whiz",      icon: "🧮", name: "Math Whiz",     desc: "Reach Math Quiz level 5",         check: s => (s.levels.math?.unlocked || 1) >= 5 },
+  { id: "word_wizard",    icon: "🔤", name: "Word Wizard",   desc: "Reach Word Scramble level 3",     check: s => (s.levels.scramble?.unlocked || 1) >= 3 },
+  { id: "clock_master",   icon: "🕐", name: "Clock Master",  desc: "Reach Telling Time level 5",      check: s => (s.levels.time?.unlocked || 1) >= 5 },
+  { id: "money_smart",    icon: "💰", name: "Money Smart",   desc: "Reach Coin Counting level 5",     check: s => (s.levels.money?.unlocked || 1) >= 5 },
+  { id: "little_artist",  icon: "🎨", name: "Little Artist", desc: "Trace 10 letters or numbers",     check: s => s.tracedCount >= 10 },
+  { id: "streak_3",       icon: "🔥", name: "3-Day Streak",  desc: "Play 3 days in a row",            check: s => s.streak >= 3 },
+  { id: "streak_7",       icon: "🔥", name: "Week Streak",   desc: "Play 7 days in a row",            check: s => s.streak >= 7 },
+  { id: "star_collector", icon: "⭐", name: "Star Collector", desc: "Earn 50 stars total",             check: s => s.totalStars >= 50 },
+  { id: "star_master",    icon: "💫", name: "Star Master",   desc: "Earn 150 stars total",            check: s => s.totalStars >= 150 }
+];
+
+/* Home-screen garden that grows with total stars. */
+const GARDEN_STAGES = [
+  { min: 0,   emoji: "🌰", label: "A Tiny Seed" },
+  { min: 10,  emoji: "🌱", label: "A Little Sprout" },
+  { min: 30,  emoji: "🌿", label: "A Growing Seedling" },
+  { min: 60,  emoji: "🌳", label: "A Young Tree" },
+  { min: 100, emoji: "🌸", label: "A Blooming Tree" },
+  { min: 150, emoji: "🌺", label: "A Garden in Full Bloom" },
+  { min: 220, emoji: "🌈", label: "A Magical Garden!" }
+];

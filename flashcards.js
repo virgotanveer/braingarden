@@ -35,6 +35,7 @@ const Flashcards = (() => {
     cards = shuffle(FLASHCARD_DECKS[key].cards);
     index = 0; flipped = false;
     document.getElementById("deckTitle").textContent = FLASHCARD_DECKS[key].icon + " " + FLASHCARD_DECKS[key].title;
+    App.recordDeckBrowsed(key);
     render();
     App.goTo("screen-flashcards");
   }
@@ -47,6 +48,7 @@ const Flashcards = (() => {
     document.getElementById("cardProgress").textContent = `${index + 1} / ${cards.length}`;
     const el = document.getElementById("flashcard");
     el.classList.toggle("flipped", flipped);
+    document.getElementById("cardSpeakBtn").onclick = () => App.speak(`${card.a}. ${card.fact}`);
   }
 
   function flip(){
@@ -104,6 +106,8 @@ const Quiz = (() => {
       allAnswers().filter(a => a !== q.a)
     ).slice(0, 3);
     const options = shuffle([q.a, ...distractors]);
+
+    document.getElementById("quizSpeakBtn").onclick = () => App.speak(`Which one is it? ${options.join(", ")}`);
 
     const wrap = document.getElementById("quizOptions");
     wrap.innerHTML = "";

@@ -6,6 +6,18 @@
    games.js (loaded first).
    =================================================================== */
 
+/* Converts a math symbol equation into words a screen reader / TTS
+   engine will read naturally, e.g. "7 × 3 = ?" -> "7 times 3 equals what". */
+function speakableMath(text){
+  return text
+    .replace(/×/g, " times ")
+    .replace(/÷/g, " divided by ")
+    .replace(/\+/g, " plus ")
+    .replace(/-/g, " minus ")
+    .replace(/=/g, " equals ")
+    .replace(/\?/g, " what");
+}
+
 /* Builds 4 distinct, non-negative multiple-choice numbers around a
    correct numeric answer. Shared by Math Quiz & Number Patterns. */
 function buildNumberChoices(answer){
@@ -43,6 +55,7 @@ const MathQuizGame = (() => {
 
     const q = MATH_LEVELS[level - 1].gen();
     document.getElementById("mathQuestion").textContent = q.text;
+    document.getElementById("mathSpeakBtn").onclick = () => App.speak(speakableMath(q.text));
 
     const options = buildNumberChoices(q.answer);
     const wrap = document.getElementById("mathOptions");

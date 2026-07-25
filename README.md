@@ -34,6 +34,25 @@ SciShow Kids, National Geographic Kids, and Sesame Street. See "About the
 Video Library" below — this is not a YouTube search, and it's worth reading
 before you deploy.
 
+**✍️ Writing & Time practice:**
+- Letter & Number Tracing — freehand canvas practice tracing over a faint guide character, for all 26 letters + 0-9
+- Telling Time — read an analog clock, 10 levels from "o'clock" up to elapsed-time word problems
+- Coin Counting — add up pennies/nickels/dimes/quarters, 10 levels up to mixed big totals
+
+**🔊 Read-aloud support** — flashcards, math questions, and flashcard-quiz
+choices can be read aloud via the browser's built-in text-to-speech
+(works offline, no external service). Toggle it in Settings.
+
+**🏅 Streaks, badges & a growing garden** — a daily play streak, 12
+unlockable badges, and a home-screen garden that visibly grows (seed →
+sprout → blooming tree) as total stars add up.
+
+**👋 Parent Dashboard** — behind a simple "solve this addition problem"
+gate (not real security, just enough friction to keep a young child out):
+stars, streak, time in app, level progress per game, earned badges, and
+buttons to **export/import a progress backup** as a JSON file, or reset
+everything.
+
 Kids earn ⭐ stars for completing games/quizzes, saved locally on the device.
 A little star mascot ("Ziggy") reacts to right/wrong answers, and everything
 is chunky-button, big-emoji, easy-to-tap for small hands.
@@ -99,11 +118,23 @@ After installing, the app opens full-screen with its own icon and works
 - `levels.js` holds the shared level-picker/progress system used by every
   leveled game. `games.js` has Memory Match, Pattern Pop, Odd One Out,
   Shape Sorter and Count & Tap. `mathgames.js` has Math Quiz, Number
-  Patterns and Word Scramble. `videos.js` renders the Video Library from
-  the `VIDEO_LIBRARY` list in `data.js`.
+  Patterns and Word Scramble. `timemoney.js` has Telling Time and Coin
+  Counting. `tracing.js` has the letter/number tracing practice tool.
+  `videos.js` renders the Video Library from `VIDEO_LIBRARY` in `data.js`.
+  `progress.js` handles badges and the home-screen garden. `parent.js`
+  handles Settings, the parent gate, and the dashboard.
 - If you edit any cached file, bump `CACHE_NAME` in `service-worker.js`
-  (e.g. `brain-garden-v4`) so returning visitors get the fresh version
+  (e.g. `brain-garden-v5`) so returning visitors get the fresh version
   instead of an old cached copy.
+
+## A note on the Parent Dashboard gate
+
+The "solve this addition problem" gate in front of Settings → Parent Zone
+is deliberately lightweight — it's meant to stop a young child from
+wandering into Reset/Export, not to be real security. Anyone older than
+about 7-8 could solve it. If you want a stronger barrier, swap the gate
+question in `parent.js` (`ParentZone.newGateProblem`) for a PIN of your
+choosing.
 
 ## Browser support
 
