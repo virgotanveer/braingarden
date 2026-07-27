@@ -11,14 +11,14 @@ const Levels = (() => {
 
   function getProgress(gameKey){
     try{
-      const raw = localStorage.getItem(key(gameKey));
+      const raw = Storage.get(key(gameKey));
       if (raw) return JSON.parse(raw);
     }catch(e){ /* ignore corrupt data */ }
     return { unlocked: 1, stars: {} };
   }
 
   function saveProgress(gameKey, progress){
-    localStorage.setItem(key(gameKey), JSON.stringify(progress));
+    Storage.set(key(gameKey), JSON.stringify(progress));
   }
 
   /** Call when a level is completed. Records best star score and

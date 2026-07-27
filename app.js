@@ -6,7 +6,7 @@
    =================================================================== */
 
 const App = (() => {
-  let totalStars = Number(localStorage.getItem("bg_stars") || 0);
+  let totalStars = Number(Storage.get("bg_stars") || 0);
   const totalStarsEl = document.getElementById("totalStars");
 
   function renderStars(){
@@ -16,7 +16,7 @@ const App = (() => {
   function addStars(n){
     totalStars += n;
     if (totalStars < 0) totalStars = 0;
-    localStorage.setItem("bg_stars", String(totalStars));
+    Storage.set("bg_stars", String(totalStars));
     renderStars();
     document.dispatchEvent(new CustomEvent("bg:statsUpdated"));
   }
@@ -53,12 +53,12 @@ const App = (() => {
   /* ---------------- Settings (sound + read-aloud) ---------------- */
   function getSettings(){
     try{
-      const raw = localStorage.getItem("bg_settings");
+      const raw = Storage.get("bg_settings");
       if (raw) return { readAloud: true, sound: true, ...JSON.parse(raw) };
     }catch(e){ /* ignore */ }
     return { readAloud: true, sound: true };
   }
-  function saveSettings(s){ localStorage.setItem("bg_settings", JSON.stringify(s)); }
+  function saveSettings(s){ Storage.set("bg_settings", JSON.stringify(s)); }
   function setSound(on){ const s = getSettings(); s.sound = on; saveSettings(s); }
   function setReadAloud(on){ const s = getSettings(); s.readAloud = on; saveSettings(s); }
 
@@ -151,13 +151,13 @@ const App = (() => {
   function defaultStats(){ return { gamesPlayed: 0, decksBrowsed: [], hasPerfectStars: false, tracedCount: 0 }; }
   function getStats(){
     try{
-      const raw = localStorage.getItem("bg_stats");
+      const raw = Storage.get("bg_stats");
       if (raw) return { ...defaultStats(), ...JSON.parse(raw) };
     }catch(e){ /* ignore */ }
     return defaultStats();
   }
   function saveStats(s){
-    localStorage.setItem("bg_stats", JSON.stringify(s));
+    Storage.set("bg_stats", JSON.stringify(s));
     document.dispatchEvent(new CustomEvent("bg:statsUpdated"));
   }
   function recordGamePlayed(){ const s = getStats(); s.gamesPlayed++; saveStats(s); }
@@ -173,7 +173,7 @@ const App = (() => {
   function todayStr(){ return new Date().toISOString().slice(0, 10); }
   function getStreakData(){
     try{
-      const raw = localStorage.getItem("bg_streak");
+      const raw = Storage.get("bg_streak");
       if (raw) return JSON.parse(raw);
     }catch(e){ /* ignore */ }
     return { count: 0, lastDate: null };
@@ -186,39 +186,42 @@ const App = (() => {
     const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
     data.count = (data.lastDate === yesterday) ? data.count + 1 : 1;
     data.lastDate = today;
-    localStorage.setItem("bg_streak", JSON.stringify(data));
+    Storage.set("bg_streak", JSON.stringify(data));
     document.dispatchEvent(new CustomEvent("bg:statsUpdated"));
   }
 
   /* ---------------- Time played (approximate, active-tab only) ---------------- */
-  function getTimePlayedMs(){ return Number(localStorage.getItem("bg_time_ms") || 0); }
+  function getTimePlayedMs(){ return Number(Storage.get("bg_time_ms") || 0); }
   function startTimeTracking(){
     setInterval(() => {
       if (document.visibilityState === "visible"){
         const ms = getTimePlayedMs() + 30000;
-        localStorage.setItem("bg_time_ms", String(ms));
+        Storage.set("bg_time_ms", String(ms));
       }
     }, 30000);
   }
 
-  /* ---------------- Progress export / import / reset ---------------- */
-  function allProgressKeys(){
-    return Object.keys(localStorage).filter(k => k.startsWith("bg_"));
-  }
+  /* ---------------- Progress export / import / reset (active profile only) ---------------- */
   function exportProgress(){
     const data = {};
-    allProgressKeys().forEach(k => data[k] = localStorage.getItem(k));
-    return JSON.stringify({ app: "ziggys-brain-garden", exportedAt: new Date().toISOString(), data }, null, 2);
+    Storage.keysForActiveProfile().forEach(k => data[k] = localStorage.getItem(k));
+    const profile = Profiles.getActive();
+    return JSON.stringify({ app: "brain-garden", profileName: profile ? profile.name : null, exportedAt: new Date().toISOString(), data }, null, 2);
   }
   function importProgress(jsonString){
     const parsed = JSON.parse(jsonString);
     if (!parsed || !parsed.data) throw new Error("Not a valid Brain Garden backup file.");
+    const id = Profiles.getActiveId();
+    if (!id) throw new Error("No active profile.");
     Object.entries(parsed.data).forEach(([k, v]) => {
-      if (k.startsWith("bg_")) localStorage.setItem(k, v);
+      // Keys were exported with their full namespaced form; re-namespace
+      // them onto whichever profile is currently active.
+      const shortKey = k.includes("_") ? k.replace(/^p_[^_]+_/, "") : k;
+      localStorage.setItem(Storage.ns(shortKey), v);
     });
   }
   function resetAllProgress(){
-    allProgressKeys().forEach(k => localStorage.removeItem(k));
+    Storage.keysForActiveProfile().forEach(k => localStorage.removeItem(k));
   }
 
   /* ---------------- Result modal ---------------- */

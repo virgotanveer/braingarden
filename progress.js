@@ -7,14 +7,14 @@
 
 const Badges = (() => {
   function earnedIds(){
-    try{ return JSON.parse(localStorage.getItem("bg_badges")) || []; }
+    try{ return JSON.parse(Storage.get("bg_badges")) || []; }
     catch(e){ return []; }
   }
-  function saveEarned(ids){ localStorage.setItem("bg_badges", JSON.stringify(ids)); }
+  function saveEarned(ids){ Storage.set("bg_badges", JSON.stringify(ids)); }
 
   function snapshotState(){
     const stats = App.getStats();
-    const levelKeys = ["memory","odd","sort","count","math","sequence","scramble","time","money"];
+    const levelKeys = ["memory","odd","sort","count","math","sequence","scramble","time","money","shadow"];
     const levels = {};
     levelKeys.forEach(k => levels[k] = Levels.getProgress(k));
     return {

@@ -1,7 +1,7 @@
 {
-  "name": "Ziggy's Brain Garden - Kids Games & Flashcards",
-  "short_name": "Brain Garden",
-  "description": "Fun brain puzzle games and general knowledge flashcards for kids ages 3-8.",
+  "name": "Minha's Garden - Kids Games & Flashcards",
+  "short_name": "Minha's Garden",
+  "description": "Fun brain puzzle games and general knowledge flashcards for kids ages 3-10.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

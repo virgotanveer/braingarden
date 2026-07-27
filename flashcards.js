@@ -75,7 +75,7 @@ const Flashcards = (() => {
 
 /* ---------------- Quiz mode ---------------- */
 const Quiz = (() => {
-  let deckKey = null, questions = [], qIndex = 0, score = 0;
+  let deckKey = null, questions = [], qIndex = 0, score = 0, missed = [];
 
   function allAnswers(exceptKey){
     const pool = [];
@@ -89,7 +89,7 @@ const Quiz = (() => {
     deckKey = key;
     const deck = FLASHCARD_DECKS[key];
     questions = shuffle(deck.cards).slice(0, Math.min(8, deck.cards.length));
-    qIndex = 0; score = 0;
+    qIndex = 0; score = 0; missed = [];
     document.getElementById("quizTotal").textContent = questions.length;
     document.getElementById("quizScore").textContent = "0";
     App.goTo("screen-quiz");
@@ -115,12 +115,12 @@ const Quiz = (() => {
       const btn = document.createElement("button");
       btn.className = "quiz-option";
       btn.textContent = opt;
-      btn.addEventListener("click", () => onAnswer(opt === q.a, btn));
+      btn.addEventListener("click", () => onAnswer(opt === q.a, btn, q, opt));
       wrap.appendChild(btn);
     });
   }
 
-  function onAnswer(correct, btn){
+  function onAnswer(correct, btn, q, chosenOpt){
     document.querySelectorAll(".quiz-option").forEach(b => b.disabled = true);
     if (correct){
       btn.classList.add("correct");
@@ -131,6 +131,7 @@ const Quiz = (() => {
       btn.classList.add("incorrect");
       App.sfxWrong();
       App.mascotSad();
+      missed.push({ prompt: q.q, yourAnswer: chosenOpt, correctAnswer: q.a });
     }
     qIndex++;
     setTimeout(renderQuestion, 800);
@@ -138,6 +139,10 @@ const Quiz = (() => {
 
   function finish(){
     const stars = score >= 7 ? 3 : score >= 5 ? 2 : score >= 3 ? 1 : 0;
+    Review.maybeShow(missed, () => showResult(stars));
+  }
+
+  function showResult(stars){
     App.showModal({
       emoji: "🏅",
       title: "Quiz complete!",

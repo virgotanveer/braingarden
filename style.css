@@ -1177,6 +1177,161 @@ a{ color:inherit; }
 .bg-toast.show{ bottom:24px; }
 .toast-emoji{ font-size:1.6rem; }
 
+/* ---------------- Topbar profile + shop buttons ---------------- */
+.profile-topbar-btn, .shop-topbar-btn{
+  border:none;
+  border-radius:50%;
+  width:42px; height:42px;
+  font-size:1.2rem;
+  box-shadow:var(--shadow);
+  cursor:pointer;
+}
+.profile-topbar-btn{ background:var(--yellow); }
+.shop-topbar-btn{ background:var(--white); }
+.profile-topbar-btn:active, .shop-topbar-btn:active{ transform:translateY(3px); box-shadow:none; }
+
+/* ---------------- Profile picker / editor ---------------- */
+.profile-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(110px,1fr));
+  gap:16px;
+}
+.profile-card{
+  position:relative;
+  border:3px solid transparent;
+  background:var(--white);
+  border-radius:var(--radius-md);
+  box-shadow:var(--shadow);
+  padding:16px 10px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+  cursor:pointer;
+}
+.profile-card:active{ transform:translateY(4px); box-shadow:none; }
+.profile-avatar{
+  width:56px; height:56px;
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.8rem;
+}
+.profile-avatar.add{ background:#eee2f7; color:var(--purple-dark); }
+.profile-name{ font-family:var(--font-display); font-size:0.95rem; }
+.profile-edit{
+  position:absolute; top:8px; right:8px;
+  font-size:0.9rem;
+  padding:4px;
+}
+.add-profile{ border-style:dashed; border-color:#c9b8e4; }
+
+.avatar-choices{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  justify-content:center;
+  max-width:340px;
+}
+.avatar-choice{
+  width:50px; height:50px;
+  border-radius:50%;
+  border:3px solid transparent;
+  font-size:1.5rem;
+  cursor:pointer;
+}
+.avatar-choice.selected{ border-color:var(--ink); }
+
+/* ---------------- Ziggy's Shop ---------------- */
+.shop-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+  gap:14px;
+}
+.shop-card{
+  background:var(--white);
+  border-radius:var(--radius-md);
+  box-shadow:var(--shadow);
+  padding:14px 10px;
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+}
+.shop-card.equipped{ outline:3px solid var(--green); }
+.shop-preview{
+  width:50px; height:50px;
+  border-radius:50%;
+  box-shadow:0 3px 0 rgba(0,0,0,0.15);
+}
+.shop-preview-emoji{
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.6rem;
+  background:#f3ecfa;
+}
+.shop-name{ font-family:var(--font-display); font-size:0.82rem; }
+.shop-action{
+  border:none;
+  border-radius:999px;
+  padding:7px 12px;
+  font-size:0.78rem;
+  font-family:var(--font-display);
+  background:var(--purple);
+  color:var(--white);
+  cursor:pointer;
+}
+.shop-action.is-equipped{ background:var(--green); }
+.shop-action:disabled{ background:#cfc3e0; cursor:not-allowed; }
+
+.mascot-accessory{
+  position:absolute;
+  top:-14px; left:50%;
+  transform:translateX(-50%);
+  font-size:1.4rem;
+  pointer-events:none;
+}
+
+/* ---------------- Review screen ---------------- */
+.review-list{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  max-width:460px;
+  margin:0 auto 16px;
+}
+.review-item{
+  background:var(--white);
+  border-radius:14px;
+  box-shadow:var(--shadow);
+  padding:12px 16px;
+}
+.review-q{ font-family:var(--font-display); font-size:0.95rem; margin-bottom:6px; }
+.review-answers{ display:flex; gap:14px; flex-wrap:wrap; font-size:0.85rem; }
+.review-wrong{ color:#c0392b; }
+.review-correct{ color:#2e8b4f; font-weight:700; }
+
+/* ---------------- Shadow Match ---------------- */
+.shadow-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(64px,1fr));
+  gap:10px;
+  max-width:460px;
+}
+.shadow-cell{
+  aspect-ratio:1/1;
+  border:none;
+  border-radius:14px;
+  background:var(--white);
+  box-shadow:var(--shadow);
+  font-size:1.8rem;
+  cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+}
+.shadow-cell .shadow-silhouette{ filter:brightness(0); opacity:0.75; }
+.shadow-cell.revealed .shadow-silhouette{ filter:none; opacity:1; }
+.shadow-cell.filled{ background:#eafcef; }
+.shadow-cell.wrong-flash{ animation:shake .35s; background:#ffe3e3; }
+
 /* ---------------- Responsive tweaks ---------------- */
 @media (max-width:380px){
   .brand-title{ font-size:1.2rem; }

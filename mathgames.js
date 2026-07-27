@@ -35,12 +35,12 @@ function buildNumberChoices(answer){
    MATH QUIZ
    ================================================================= */
 const MathQuizGame = (() => {
-  let level = 1, qIndex = 0, score = 0, totalQuestions = 8;
+  let level = 1, qIndex = 0, score = 0, totalQuestions = 8, missed = [];
   let refreshPicker = null;
 
   function start(lvl){
     level = lvl;
-    qIndex = 0; score = 0;
+    qIndex = 0; score = 0; missed = [];
     document.getElementById("mathLevelNum").textContent = level;
     document.getElementById("mathTotal").textContent = totalQuestions;
     document.getElementById("mathScore").textContent = "0";
@@ -64,12 +64,12 @@ const MathQuizGame = (() => {
       const btn = document.createElement("button");
       btn.className = "quiz-option";
       btn.textContent = val;
-      btn.addEventListener("click", () => onAnswer(val === q.answer, btn));
+      btn.addEventListener("click", () => onAnswer(val === q.answer, btn, q, val));
       wrap.appendChild(btn);
     });
   }
 
-  function onAnswer(correct, btn){
+  function onAnswer(correct, btn, q, chosenVal){
     document.querySelectorAll("#mathOptions .quiz-option").forEach(b => b.disabled = true);
     if (correct){
       btn.classList.add("correct");
@@ -80,6 +80,7 @@ const MathQuizGame = (() => {
       btn.classList.add("incorrect");
       App.sfxWrong();
       App.mascotSad();
+      missed.push({ prompt: q.text, yourAnswer: String(chosenVal), correctAnswer: String(q.answer) });
     }
     setTimeout(nextQuestion, 800);
   }
@@ -87,6 +88,10 @@ const MathQuizGame = (() => {
   function finish(){
     const stars = score >= 7 ? 3 : score >= 5 ? 2 : score >= 3 ? 1 : 0;
     Levels.complete("math", level, stars, 10);
+    Review.maybeShow(missed, () => showResult(stars));
+  }
+
+  function showResult(stars){
     App.showModal({
       emoji: "🧮",
       title: "Quiz complete!",
@@ -110,12 +115,12 @@ const MathQuizGame = (() => {
    NUMBER PATTERNS
    ================================================================= */
 const SequenceGame = (() => {
-  let level = 1, qIndex = 0, score = 0, totalQuestions = 8;
+  let level = 1, qIndex = 0, score = 0, totalQuestions = 8, missed = [];
   let refreshPicker = null;
 
   function start(lvl){
     level = lvl;
-    qIndex = 0; score = 0;
+    qIndex = 0; score = 0; missed = [];
     document.getElementById("sequenceLevelNum").textContent = level;
     document.getElementById("sequenceTotal").textContent = totalQuestions;
     document.getElementById("sequenceScore").textContent = "0";
@@ -138,6 +143,8 @@ const SequenceGame = (() => {
       row.appendChild(tile);
     });
 
+    const promptText = `Sequence: ${q.seq.map((n, i) => i === q.blankIndex ? "blank" : n).join(", ")}. What's the missing number?`;
+
     const options = buildNumberChoices(q.answer);
     const wrap = document.getElementById("sequenceChoices");
     wrap.innerHTML = "";
@@ -145,12 +152,12 @@ const SequenceGame = (() => {
       const btn = document.createElement("button");
       btn.className = "count-choice";
       btn.textContent = val;
-      btn.addEventListener("click", () => onAnswer(val === q.answer, btn));
+      btn.addEventListener("click", () => onAnswer(val === q.answer, btn, promptText, q, val));
       wrap.appendChild(btn);
     });
   }
 
-  function onAnswer(correct, btn){
+  function onAnswer(correct, btn, promptText, q, chosenVal){
     document.querySelectorAll("#sequenceChoices .count-choice").forEach(b => b.disabled = true);
     if (correct){
       btn.style.background = "var(--green)";
@@ -161,6 +168,7 @@ const SequenceGame = (() => {
       btn.style.background = "#ff8080";
       App.sfxWrong();
       App.mascotSad();
+      missed.push({ prompt: promptText, yourAnswer: String(chosenVal), correctAnswer: String(q.answer) });
     }
     setTimeout(nextQuestion, 800);
   }
@@ -168,6 +176,10 @@ const SequenceGame = (() => {
   function finish(){
     const stars = score >= 7 ? 3 : score >= 5 ? 2 : score >= 3 ? 1 : 0;
     Levels.complete("sequence", level, stars, 10);
+    Review.maybeShow(missed, () => showResult(stars));
+  }
+
+  function showResult(stars){
     App.showModal({
       emoji: "🔗",
       title: "Pattern complete!",

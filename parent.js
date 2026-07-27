@@ -9,7 +9,8 @@
 const GAME_LABELS = {
   memory: "🧠 Memory Match", odd: "🔍 Odd One Out", sort: "🧺 Shape Sorter",
   count: "🔢 Count & Tap", math: "🧮 Math Quiz", sequence: "🔗 Number Patterns",
-  scramble: "🔤 Word Scramble", time: "🕐 Telling Time", money: "💰 Coin Counting"
+  scramble: "🔤 Word Scramble", time: "🕐 Telling Time", money: "💰 Coin Counting",
+  shadow: "🧩 Shadow Match"
 };
 
 const Settings = (() => {
@@ -23,6 +24,10 @@ const Settings = (() => {
     document.getElementById("toggleReadAloud").addEventListener("change", (e) => App.setReadAloud(e.target.checked));
     document.getElementById("toggleSound").addEventListener("change", (e) => App.setSound(e.target.checked));
     document.querySelector('[data-nav="parent-gate"]').addEventListener("click", ParentZone.newGateProblem);
+    document.getElementById("settingsSwitchProfile").addEventListener("click", () => {
+      ProfileUI.renderPicker();
+      App.goTo("screen-profiles");
+    });
   }
   return { init, syncToggles };
 })();
@@ -58,6 +63,8 @@ const ParentZone = (() => {
 
   function renderDashboard(){
     const stats = App.getStats();
+    const activeProfile = Profiles.getActive();
+    document.getElementById("dashProfileName").textContent = activeProfile ? `Progress for ${activeProfile.name}` : "";
 
     const summary = document.getElementById("dashSummary");
     summary.innerHTML = `

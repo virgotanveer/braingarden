@@ -569,6 +569,7 @@ const BADGES = [
   { id: "clock_master",   icon: "🕐", name: "Clock Master",  desc: "Reach Telling Time level 5",      check: s => (s.levels.time?.unlocked || 1) >= 5 },
   { id: "money_smart",    icon: "💰", name: "Money Smart",   desc: "Reach Coin Counting level 5",     check: s => (s.levels.money?.unlocked || 1) >= 5 },
   { id: "little_artist",  icon: "🎨", name: "Little Artist", desc: "Trace 10 letters or numbers",     check: s => s.tracedCount >= 10 },
+  { id: "puzzle_master",  icon: "🧩", name: "Puzzle Master",  desc: "Reach Shadow Match level 5",      check: s => (s.levels.shadow?.unlocked || 1) >= 5 },
   { id: "streak_3",       icon: "🔥", name: "3-Day Streak",  desc: "Play 3 days in a row",            check: s => s.streak >= 3 },
   { id: "streak_7",       icon: "🔥", name: "Week Streak",   desc: "Play 7 days in a row",            check: s => s.streak >= 7 },
   { id: "star_collector", icon: "⭐", name: "Star Collector", desc: "Earn 50 stars total",             check: s => s.totalStars >= 50 },
@@ -585,3 +586,74 @@ const GARDEN_STAGES = [
   { min: 150, emoji: "🌺", label: "A Garden in Full Bloom" },
   { min: 220, emoji: "🌈", label: "A Magical Garden!" }
 ];
+
+/* ===================================================================
+   PROFILES — avatar choices offered when creating/editing a profile.
+   =================================================================== */
+const AVATAR_OPTIONS = [
+  { id: "fox",    emoji: "🦊", color: "#FF9F45" },
+  { id: "bear",   emoji: "🐻", color: "#C77B3F" },
+  { id: "bunny",  emoji: "🐰", color: "#FF6FA5" },
+  { id: "cat",    emoji: "🐱", color: "#9B72CF" },
+  { id: "dog",    emoji: "🐶", color: "#4EC5F1" },
+  { id: "unicorn",emoji: "🦄", color: "#FFC93C" },
+  { id: "panda",  emoji: "🐼", color: "#6BCB77" },
+  { id: "lion",   emoji: "🦁", color: "#E0A030" }
+];
+
+/* ===================================================================
+   ZIGGY'S SHOP — spend stars to customize the mascot. Colors change
+   the star's fill; accessories layer an emoji on top. Everyone starts
+   owning the free defaults.
+   =================================================================== */
+const SHOP_ITEMS = [
+  { id: "color_gold",    type: "color", name: "Classic Gold", value: "#FFC93C",                                   cost: 0  },
+  { id: "color_pink",    type: "color", name: "Bubblegum",    value: "#FF6FA5",                                   cost: 15 },
+  { id: "color_sky",     type: "color", name: "Sky Blue",     value: "#4EC5F1",                                   cost: 15 },
+  { id: "color_green",   type: "color", name: "Mint",         value: "#6BCB77",                                   cost: 15 },
+  { id: "color_purple",  type: "color", name: "Grape",        value: "#9B72CF",                                   cost: 20 },
+  { id: "color_rainbow", type: "color", name: "Rainbow",      value: "linear-gradient(135deg,#FF6FA5,#FFC93C,#4EC5F1,#6BCB77)", cost: 60 },
+  { id: "acc_none",    type: "accessory", name: "No Accessory", emoji: "",   cost: 0  },
+  { id: "acc_bow",     type: "accessory", name: "Bow Tie",      emoji: "🎀", cost: 25 },
+  { id: "acc_glasses", type: "accessory", name: "Cool Shades",  emoji: "🕶️", cost: 30 },
+  { id: "acc_hat",     type: "accessory", name: "Top Hat",      emoji: "🎩", cost: 35 },
+  { id: "acc_crown",   type: "accessory", name: "Crown",        emoji: "👑", cost: 80 }
+];
+
+/* ===================================================================
+   SHADOW MATCH — a jigsaw-style spatial puzzle without needing image
+   assets: emoji rendered with a CSS filter become solid silhouettes,
+   and kids match each colorful object to its correct shadow.
+   =================================================================== */
+const SHADOW_LEVELS = [
+  { pairs: 3, timeLimit: null, ages: "4-5" },
+  { pairs: 4, timeLimit: null, ages: "4-5" },
+  { pairs: 5, timeLimit: null, ages: "5-6" },
+  { pairs: 5, timeLimit: 50,   ages: "5-6" },
+  { pairs: 6, timeLimit: 50,   ages: "6-7" },
+  { pairs: 6, timeLimit: 40,   ages: "6-7" },
+  { pairs: 7, timeLimit: 45,   ages: "7-8" },
+  { pairs: 7, timeLimit: 35,   ages: "7-8" },
+  { pairs: 8, timeLimit: 40,   ages: "8-9" },
+  { pairs: 8, timeLimit: 30,   ages: "9-10" }
+];
+GAME_EMOJI.shadowItems = ["🐶","🐱","🐰","🦋","🌳","🚗","✈️","⚽","🎈","🌟","🐦","🌵","🏠","🎸","🐢","🍄"];
+
+/* Feelings — a social-emotional-learning deck. */
+FLASHCARD_DECKS.feelings = {
+  title: "My Feelings",
+  icon: "🥰",
+  color: "#FF9AC1",
+  cards: [
+    { q: "😀", a: "Happy",     fact: "Happy is how you feel when something makes you smile." },
+    { q: "😢", a: "Sad",       fact: "It's okay to feel sad sometimes — talking about it helps." },
+    { q: "😠", a: "Angry",     fact: "Taking deep breaths can help when you feel angry." },
+    { q: "😨", a: "Scared",    fact: "Everyone feels scared sometimes — a hug can help!" },
+    { q: "😲", a: "Surprised", fact: "Surprised is how you feel when something unexpected happens." },
+    { q: "😴", a: "Tired",     fact: "Your body tells you it's tired when it needs rest." },
+    { q: "🥰", a: "Loved",     fact: "Feeling loved makes your heart feel warm and happy." },
+    { q: "😕", a: "Confused",  fact: "It's okay to ask questions when you feel confused." },
+    { q: "😌", a: "Calm",      fact: "Calm is a peaceful, relaxed feeling." },
+    { q: "🤗", a: "Proud",     fact: "You feel proud when you've done something great!" }
+  ]
+};
