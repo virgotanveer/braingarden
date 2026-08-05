@@ -507,6 +507,11 @@ a{ color:inherit; }
   background:linear-gradient(165deg,var(--white),#fbf3ff);
   font-size:5rem;
 }
+.card-label{
+  font-family:var(--font-display);
+  font-size:1.1rem;
+  color:var(--purple-dark);
+}
 .flashcard-face.back{
   background:linear-gradient(165deg,var(--purple),var(--pink));
   color:var(--white);
@@ -1341,4 +1346,67 @@ a{ color:inherit; }
 /* Respect reduced motion */
 @media (prefers-reduced-motion: reduce){
   *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; }
+}
+
+/* ===================================================================
+   LEGACY BROWSER FALLBACKS
+   CSS Grid, flexbox `gap`, and `aspect-ratio` aren't supported on very
+   old WebView engines (e.g. an Android 5 device that never received a
+   WebView update via Play Store). These @supports blocks are only
+   ever seen by browsers that lack the feature — every modern browser
+   ignores them completely and keeps using the CSS above.
+   =================================================================== */
+
+/* ---- Grid -> Flexbox fallback ---- */
+@supports not (display: grid) {
+  .sticker-grid, .picker-grid, .memory-grid, .simon-pad-grid, .odd-grid,
+  .quiz-options, .level-grid, .video-grid, .dash-summary, .badge-grid,
+  .trace-item-grid, .profile-grid, .shop-grid, .shadow-grid {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .sticker-grid > *, .video-grid > *, .dash-summary > *,
+  .simon-pad-grid > *, .quiz-options > * { flex: 0 0 44%; margin: 3%; }
+  .picker-grid > *, .profile-grid > *, .shop-grid > *,
+  .badge-grid > * { flex: 0 0 29%; margin: 2%; }
+  .memory-grid > *, .odd-grid > *, .level-grid > *, .shadow-grid > * {
+    flex: 0 0 21%; margin: 2%;
+  }
+  .trace-item-grid > * { flex: 0 0 13%; margin: 1%; }
+}
+
+/* ---- Flexbox `gap` -> margin fallback ---- */
+@supports not (gap: 1px) {
+  .topbar > *, .topbar .brand > *, .stars-badge > *, .btn-row > *,
+  .hud > *, .hud-chip > *, .sticker > *, .picker-card > *,
+  .sort-tray > *, .sort-bins > *, .count-choices > *,
+  .flashcard-face > *, .deck-nav > *, .level-tile > *,
+  .sequence-row > *, .answer-strip > *, .letter-tray > *,
+  .settings-list > *, .garden-widget > *, .dash-levels > *,
+  .badge-chip > *, .coin-row > *, .prompt-row > *, .bg-toast > *,
+  .profile-card > *, .avatar-choices > *, .shop-card > *,
+  .review-list > *, .review-answers > *, .game-area > *,
+  .sticker-grid > *, .video-grid > *, .picker-grid > * {
+    margin: 5px;
+  }
+}
+
+/* ---- aspect-ratio fallback (prevents elements collapsing to 0 height) ---- */
+@supports not (aspect-ratio: 1/1) {
+  .memory-card, .odd-tile, .simon-pad, .trace-item-btn, .shadow-cell {
+    height: 76px;
+  }
+  .trace-canvas { height: 320px; }
+  .flashcard { height: 380px; }
+  .video-player-wrap {
+    height: 0;
+    padding-bottom: 56.25%;
+    position: relative;
+  }
+  .video-player-wrap iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+  }
+  .video-card img { height: 140px; }
 }

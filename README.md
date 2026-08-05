@@ -169,7 +169,48 @@ about 7-8 could solve it. If you want a stronger barrier, swap the gate
 question in `parent.js` (`ParentZone.newGateProblem`) for a PIN of your
 choosing.
 
+## Older Android / Android 5 compatibility
+
+A few fixes went in specifically for older devices:
+
+- **Country flags weren't showing country names.** Flag emoji (and other
+  compound emoji like the job-icons in "Jobs & Helpers") are some of the
+  least reliably-rendered characters on Android — this isn't only an
+  old-device problem; Android's emoji font has historically been
+  inconsistent about flags on many versions. The **World Capitals** deck now
+  always shows the country name as real text alongside the flag, so the
+  card still makes sense even if the flag glyph itself doesn't render.
+  (I didn't do this for the "Countries & Flags" or "Jobs & Helpers" decks,
+  since in those decks the picture *is* the question being asked — adding
+  the text there would just show the answer. If flags/job-icons are
+  rendering as blank boxes for you, that's a real limitation of those two
+  decks on affected devices; let me know if you'd like them reworked.)
+- **Removed a hard syntax-error risk.** A few badge conditions used
+  JavaScript optional chaining (`?.`), which needs a 2020-era JS engine.
+  On an older WebView that doesn't recognize it, that one bad line would
+  have failed to parse and broken the *entire app*, not just badges. It's
+  now written the old-fashioned way (`a && a.b`) so it parses everywhere.
+- **CSS Grid / flexbox `gap` / `aspect-ratio` fallbacks.** These are the
+  three CSS features the whole layout leans on most, and none of them
+  existed in the browser engine Android 5 originally shipped with (2014).
+  There are now `@supports` fallback rules — invisible to modern browsers —
+  that switch to plain flexbox-with-margins and fixed heights if the
+  browser doesn't understand the newer syntax, so squares/cards/the video
+  player can't silently collapse to zero height.
+
+**One important caveat:** Android 5.0+ can actually receive WebView updates
+through the Play Store independently of the Android OS version — so how
+old the *actual rendering engine* is depends on whether that specific
+device kept getting WebView updates, not just the "Android 5" label. If
+you're still seeing problems after these fixes, it's worth checking Play
+Store → Android System WebView → whether an update is available for that
+device. There's a deeper (and much larger) fix available if needed: this
+app's CSS relies heavily on CSS custom properties (`var(--color)`), which
+needs a 2016-era browser at minimum. If colors/theming look broken (not
+just missing pictures), that's the likely cause, and let me know — it would
+mean rewriting the whole stylesheet without variables.
+
 ## Browser support
 
-Works in all modern mobile and desktop browsers. No external JS frameworks —
-just vanilla HTML/CSS/JS, so it loads fast even on older phones.
+Otherwise, works in all modern mobile and desktop browsers. No external JS
+frameworks — just vanilla HTML/CSS/JS, so it loads fast even on older phones.

@@ -43,12 +43,13 @@ const Flashcards = (() => {
   function render(){
     const card = cards[index];
     document.getElementById("cardFront").textContent = card.q;
+    document.getElementById("cardLabel").textContent = card.label || "";
     document.getElementById("cardBack").textContent = card.a;
     document.getElementById("cardFact").textContent = card.fact;
     document.getElementById("cardProgress").textContent = `${index + 1} / ${cards.length}`;
     const el = document.getElementById("flashcard");
     el.classList.toggle("flipped", flipped);
-    document.getElementById("cardSpeakBtn").onclick = () => App.speak(`${card.a}. ${card.fact}`);
+    document.getElementById("cardSpeakBtn").onclick = () => App.speak(`${card.label ? card.label + ". " : ""}${card.a}. ${card.fact}`);
   }
 
   function flip(){
@@ -101,13 +102,14 @@ const Quiz = (() => {
     const q = questions[qIndex];
     document.getElementById("quizIndex").textContent = qIndex + 1;
     document.getElementById("quizPrompt").textContent = q.q;
+    document.getElementById("quizLabel").textContent = q.label || "";
 
     const distractors = shuffle(
       allAnswers().filter(a => a !== q.a)
     ).slice(0, 3);
     const options = shuffle([q.a, ...distractors]);
 
-    document.getElementById("quizSpeakBtn").onclick = () => App.speak(`Which one is it? ${options.join(", ")}`);
+    document.getElementById("quizSpeakBtn").onclick = () => App.speak(`${q.label ? q.label + ". " : ""}Which one is it? ${options.join(", ")}`);
 
     const wrap = document.getElementById("quizOptions");
     wrap.innerHTML = "";
@@ -131,7 +133,7 @@ const Quiz = (() => {
       btn.classList.add("incorrect");
       App.sfxWrong();
       App.mascotSad();
-      missed.push({ prompt: q.q, yourAnswer: chosenOpt, correctAnswer: q.a });
+      missed.push({ prompt: q.label ? `${q.q} ${q.label}` : q.q, yourAnswer: chosenOpt, correctAnswer: q.a });
     }
     qIndex++;
     setTimeout(renderQuestion, 800);

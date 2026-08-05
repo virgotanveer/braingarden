@@ -281,12 +281,11 @@ const App = (() => {
       }
     });
 
-    installBtn.addEventListener("click", async () => {
+    installBtn.addEventListener("click", () => {
       banner.classList.remove("active");
       if (deferredPrompt){
         deferredPrompt.prompt();
-        await deferredPrompt.userChoice;
-        deferredPrompt = null;
+        deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
       }
     });
 
