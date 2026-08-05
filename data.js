@@ -570,6 +570,7 @@ const BADGES = [
   { id: "money_smart",    icon: "💰", name: "Money Smart",   desc: "Reach Coin Counting level 5",     check: s => ((s.levels.money && s.levels.money.unlocked) || 1) >= 5 },
   { id: "little_artist",  icon: "🎨", name: "Little Artist", desc: "Trace 10 letters or numbers",     check: s => s.tracedCount >= 10 },
   { id: "puzzle_master",  icon: "🧩", name: "Puzzle Master",  desc: "Reach Shadow Match level 5",      check: s => ((s.levels.shadow && s.levels.shadow.unlocked) || 1) >= 5 },
+  { id: "strategist",     icon: "⭕", name: "Strategist",     desc: "Reach Tic Tac Toe level 7",       check: s => ((s.levels.tictactoe && s.levels.tictactoe.unlocked) || 1) >= 7 },
   { id: "streak_3",       icon: "🔥", name: "3-Day Streak",  desc: "Play 3 days in a row",            check: s => s.streak >= 3 },
   { id: "streak_7",       icon: "🔥", name: "Week Streak",   desc: "Play 7 days in a row",            check: s => s.streak >= 7 },
   { id: "star_collector", icon: "⭐", name: "Star Collector", desc: "Earn 50 stars total",             check: s => s.totalStars >= 50 },
@@ -657,3 +658,24 @@ FLASHCARD_DECKS.feelings = {
     { q: "🤗", a: "Proud",     fact: "You feel proud when you've done something great!" }
   ]
 };
+
+/* ===================================================================
+   TIC TAC TOE — 10 levels of AI difficulty against Ziggy. `smart` is
+   the probability the AI plays its mathematically optimal move (via
+   minimax) rather than a random empty square; it climbs from "mostly
+   random" to "never makes a mistake." 5 rounds per level; since a
+   perfect opponent can't be beaten, draws still earn points so kids
+   are rewarded for playing well even against an unbeatable Ziggy.
+   =================================================================== */
+const TICTACTOE_LEVELS = [
+  { label: "Just Learning", ages: "4-5",  smart: 0.05 },
+  { label: "Getting Tricky", ages: "5-6",  smart: 0.2  },
+  { label: "Watch Out!",    ages: "5-6",  smart: 0.35 },
+  { label: "Sharp Moves",   ages: "6-7",  smart: 0.5  },
+  { label: "Clever Ziggy",  ages: "6-7",  smart: 0.6  },
+  { label: "Strategic",     ages: "7-8",  smart: 0.75 },
+  { label: "Expert Ziggy",  ages: "7-8",  smart: 0.85 },
+  { label: "Master Level",  ages: "8-9",  smart: 0.95 },
+  { label: "Unbeatable",    ages: "9-10", smart: 1.0  },
+  { label: "Grandmaster",   ages: "9-10", smart: 1.0  }
+];

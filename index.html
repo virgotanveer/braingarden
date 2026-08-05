@@ -124,6 +124,11 @@
         <span class="label">Word Scramble</span>
         <span class="sub">Spelling</span>
       </button>
+      <button class="sticker c3" data-nav="picker-tictactoe">
+        <span class="emoji">⭕</span>
+        <span class="label">Tic Tac Toe</span>
+        <span class="sub">Strategy</span>
+      </button>
     </div>
 
     <span class="section-eyebrow">✍️ Writing &amp; Time</span>
@@ -598,6 +603,33 @@
     </div>
   </section>
 
+  <!-- =================== TIC TAC TOE =================== -->
+  <section id="screen-picker-tictactoe" class="screen">
+    <div class="screen-header">
+      <button class="back-btn" data-back="screen-home">⬅ Back</button>
+      <h2 style="margin-top:14px;">⭕ Tic Tac Toe</h2>
+      <p>You're ❌, Ziggy is ⭐. 5 games per level — can you out-think Ziggy?</p>
+    </div>
+    <div class="level-grid" id="tictactoeLevelGrid"></div>
+  </section>
+
+  <section id="screen-game-tictactoe" class="screen">
+    <div class="screen-header">
+      <button class="back-btn" data-back="screen-picker-tictactoe">⬅ Back</button>
+    </div>
+    <div class="hud">
+      <div class="hud-chip">🏅 Lv <span id="tttLevelNum">1</span></div>
+      <div class="hud-chip">🎯 Game <span id="tttRound">1</span>/5</div>
+      <div class="hud-chip">✅ <span id="tttWins">0</span></div>
+      <div class="hud-chip">🤝 <span id="tttDraws">0</span></div>
+      <div class="hud-chip">❌ <span id="tttLosses">0</span></div>
+    </div>
+    <div class="game-area">
+      <p class="prompt-text" id="tttStatus">Your turn — tap a square!</p>
+      <div class="ttt-board" id="tttBoard"></div>
+    </div>
+  </section>
+
   <!-- =================== SHADOW MATCH =================== -->
   <section id="screen-picker-shadow" class="screen">
     <div class="screen-header">
@@ -728,6 +760,7 @@
 <script src="parent.js"></script>
 <script src="shop.js"></script>
 <script src="shadow.js"></script>
+<script src="tictactoe.js"></script>
 <script src="review.js"></script>
 </body>
 </html>

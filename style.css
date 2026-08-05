@@ -1315,6 +1315,28 @@ a{ color:inherit; }
 .review-wrong{ color:#c0392b; }
 .review-correct{ color:#2e8b4f; font-weight:700; }
 
+/* ---------------- Tic Tac Toe ---------------- */
+.ttt-board{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:10px;
+  width:100%;
+  max-width:300px;
+  margin:0 auto;
+}
+.ttt-cell{
+  aspect-ratio:1/1;
+  border:none;
+  border-radius:16px;
+  background:var(--white);
+  box-shadow:var(--shadow);
+  font-size:clamp(1.8rem,8vw,2.6rem);
+  cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+}
+.ttt-cell:disabled{ cursor:default; }
+.ttt-cell.win{ background:#eafcef; outline:3px solid var(--green); }
+
 /* ---------------- Shadow Match ---------------- */
 .shadow-grid{
   display:grid;
@@ -1361,12 +1383,13 @@ a{ color:inherit; }
 @supports not (display: grid) {
   .sticker-grid, .picker-grid, .memory-grid, .simon-pad-grid, .odd-grid,
   .quiz-options, .level-grid, .video-grid, .dash-summary, .badge-grid,
-  .trace-item-grid, .profile-grid, .shop-grid, .shadow-grid {
+  .trace-item-grid, .profile-grid, .shop-grid, .shadow-grid, .ttt-board {
     display: flex;
     flex-wrap: wrap;
   }
   .sticker-grid > *, .video-grid > *, .dash-summary > *,
   .simon-pad-grid > *, .quiz-options > * { flex: 0 0 44%; margin: 3%; }
+  .ttt-board > * { flex: 0 0 29%; margin: 2%; }
   .picker-grid > *, .profile-grid > *, .shop-grid > *,
   .badge-grid > * { flex: 0 0 29%; margin: 2%; }
   .memory-grid > *, .odd-grid > *, .level-grid > *, .shadow-grid > * {
@@ -1386,14 +1409,14 @@ a{ color:inherit; }
   .badge-chip > *, .coin-row > *, .prompt-row > *, .bg-toast > *,
   .profile-card > *, .avatar-choices > *, .shop-card > *,
   .review-list > *, .review-answers > *, .game-area > *,
-  .sticker-grid > *, .video-grid > *, .picker-grid > * {
+  .sticker-grid > *, .video-grid > *, .picker-grid > *, .ttt-board > * {
     margin: 5px;
   }
 }
 
 /* ---- aspect-ratio fallback (prevents elements collapsing to 0 height) ---- */
 @supports not (aspect-ratio: 1/1) {
-  .memory-card, .odd-tile, .simon-pad, .trace-item-btn, .shadow-cell {
+  .memory-card, .odd-tile, .simon-pad, .trace-item-btn, .shadow-cell, .ttt-cell {
     height: 76px;
   }
   .trace-canvas { height: 320px; }

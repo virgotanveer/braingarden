@@ -14,7 +14,7 @@ const Badges = (() => {
 
   function snapshotState(){
     const stats = App.getStats();
-    const levelKeys = ["memory","odd","sort","count","math","sequence","scramble","time","money","shadow"];
+    const levelKeys = ["memory","odd","sort","count","math","sequence","scramble","time","money","shadow","tictactoe"];
     const levels = {};
     levelKeys.forEach(k => levels[k] = Levels.getProgress(k));
     return {

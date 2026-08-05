@@ -10,7 +10,7 @@ const GAME_LABELS = {
   memory: "🧠 Memory Match", odd: "🔍 Odd One Out", sort: "🧺 Shape Sorter",
   count: "🔢 Count & Tap", math: "🧮 Math Quiz", sequence: "🔗 Number Patterns",
   scramble: "🔤 Word Scramble", time: "🕐 Telling Time", money: "💰 Coin Counting",
-  shadow: "🧩 Shadow Match"
+  shadow: "🧩 Shadow Match", tictactoe: "⭕ Tic Tac Toe"
 };
 
 const Settings = (() => {
