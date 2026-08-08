@@ -105,6 +105,11 @@
         <span class="label">Shadow Match</span>
         <span class="sub">Spatial</span>
       </button>
+      <button class="sticker c2" data-nav="picker-trail">
+        <span class="emoji">🧵</span>
+        <span class="label">Trail Trace</span>
+        <span class="sub">Sequencing</span>
+      </button>
     </div>
 
     <span class="section-eyebrow">➕ Math &amp; Logic</span>
@@ -655,6 +660,32 @@
     </div>
   </section>
 
+  <!-- =================== TRAIL TRACE =================== -->
+  <section id="screen-picker-trail" class="screen">
+    <div class="screen-header">
+      <button class="back-btn" data-back="screen-home">⬅ Back</button>
+      <h2 style="margin-top:14px;">🧵 Trail Trace</h2>
+      <p>Drag a path connecting the numbers in order, 1 to the end!</p>
+    </div>
+    <div class="level-grid" id="trailLevelGrid"></div>
+  </section>
+
+  <section id="screen-game-trail" class="screen">
+    <div class="screen-header">
+      <button class="back-btn" data-back="screen-picker-trail">⬅ Back</button>
+    </div>
+    <div class="hud">
+      <div class="hud-chip">🏅 Lv <span id="trailLevelNum">1</span></div>
+      <div class="hud-chip">🎯 <span id="trailProgress">0 / 3</span></div>
+    </div>
+    <div class="game-area">
+      <p class="prompt-text" id="trailStatus">Start at 1!</p>
+      <div class="trail-stage" id="trailStage">
+        <canvas id="trailCanvas" class="trail-canvas"></canvas>
+      </div>
+    </div>
+  </section>
+
   <!-- =================== ZIGGY'S SHOP =================== -->
   <section id="screen-shop" class="screen">
     <div class="screen-header">
@@ -761,6 +792,7 @@
 <script src="shop.js"></script>
 <script src="shadow.js"></script>
 <script src="tictactoe.js"></script>
+<script src="trailtrace.js"></script>
 <script src="review.js"></script>
 </body>
 </html>

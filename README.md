@@ -11,7 +11,7 @@ gets its own stars, levels, badges, streak, and shop items, kept completely
 separate. A "Who's Playing?" screen shows on first launch and whenever
 switching; a small avatar button in the top bar switches profiles anytime.
 
-**10 brain games, each with 10 levels (ages ~3 to 10)** so there's always a
+**11 brain games, each with 10 levels (ages ~3 to 10)** so there's always a
 next challenge instead of the same difficulty on repeat:
 - 🧠 Memory Match — flip-and-match pairs; later levels add a countdown timer
 - 🎵 Pattern Pop — Simon-style sequence memory (climbs infinitely, not capped at 10)
@@ -19,7 +19,8 @@ next challenge instead of the same difficulty on repeat:
 - 🧺 Shape Sorter — match shapes to their basket; later levels add a countdown
 - 🔢 Count & Tap — counting, then bridges into visual addition/subtraction/multiplication
 - 🧩 Shadow Match — match colorful objects to their silhouette; a jigsaw-style spatial puzzle
-- ⭕ **Tic Tac Toe** — play against Ziggy; a real minimax AI whose difficulty climbs from "mostly random" to mathematically unbeatable
+- ⭕ Tic Tac Toe — play against Ziggy; a real minimax AI whose difficulty climbs from "mostly random" to mathematically unbeatable
+- 🧵 **Trail Trace** — drag a path connecting numbers in order (a kid-friendly take on the classic "trail making" attention exercise); higher levels alternate numbers and letters for a task-switching challenge
 - 🧮 Math Quiz — real arithmetic: adding/subtracting, times tables, division, and two-step word problems
 - 🔗 Number Patterns — fill in the missing number in a sequence (skip-counting, counting down, doubling patterns)
 - 🔤 Word Scramble — tap letters in order to spell words, from 3-letter words up to "MULTIPLICATION"

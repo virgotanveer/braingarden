@@ -333,7 +333,7 @@ a{ color:inherit; }
 @keyframes pop{ 50%{ transform:rotateY(180deg) scale(1.08);} }
 
 .memory-face{
-  position:absolute; inset:0;
+  position:absolute; top:0; right:0; bottom:0; left:0;
   display:flex; align-items:center; justify-content:center;
   border-radius:16px;
   backface-visibility:hidden;
@@ -491,7 +491,7 @@ a{ color:inherit; }
 }
 .flashcard.flipped .flashcard-inner{ transform:rotateY(180deg); }
 .flashcard-face{
-  position:absolute; inset:0;
+  position:absolute; top:0; right:0; bottom:0; left:0;
   border-radius:var(--radius-lg);
   backface-visibility:hidden;
   display:flex;
@@ -580,7 +580,7 @@ a{ color:inherit; }
 
 /* ---------------- Result modal ---------------- */
 .modal-overlay{
-  position:fixed; inset:0;
+  position:fixed; top:0; right:0; bottom:0; left:0;
   background:rgba(58,46,77,0.45);
   display:none;
   align-items:center;
@@ -1315,6 +1315,50 @@ a{ color:inherit; }
 .review-wrong{ color:#c0392b; }
 .review-correct{ color:#2e8b4f; font-weight:700; }
 
+/* ---------------- Trail Trace ---------------- */
+.trail-stage{
+  position:relative;
+  width:100%;
+  max-width:420px;
+  aspect-ratio:4/3;
+  background:var(--white);
+  border-radius:var(--radius-lg);
+  box-shadow:var(--shadow);
+  border:3px solid #eee2f7;
+  overflow:hidden;
+  touch-action:none;
+}
+.trail-canvas{
+  position:absolute;
+  top:0; right:0; bottom:0; left:0;
+  width:100%;
+  height:100%;
+}
+.trail-node{
+  position:absolute;
+  width:44px; height:44px;
+  margin-left:-22px; margin-top:-22px;
+  border-radius:50%;
+  background:var(--white);
+  border:3px solid #c9b8e4;
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-display);
+  font-size:1.1rem;
+  color:var(--ink);
+  box-shadow:0 3px 0 rgba(0,0,0,0.12);
+  z-index:2;
+  pointer-events:none;
+}
+.trail-node.current{
+  border-color:var(--orange);
+  animation:pulse-timer 1s infinite;
+}
+.trail-node.reached{
+  background:var(--green);
+  border-color:var(--green);
+  color:var(--white);
+}
+
 /* ---------------- Tic Tac Toe ---------------- */
 .ttt-board{
   display:grid;
@@ -1420,6 +1464,7 @@ a{ color:inherit; }
     height: 76px;
   }
   .trace-canvas { height: 320px; }
+  .trail-stage { height: 300px; }
   .flashcard { height: 380px; }
   .video-player-wrap {
     height: 0;

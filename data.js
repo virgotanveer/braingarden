@@ -571,6 +571,7 @@ const BADGES = [
   { id: "little_artist",  icon: "🎨", name: "Little Artist", desc: "Trace 10 letters or numbers",     check: s => s.tracedCount >= 10 },
   { id: "puzzle_master",  icon: "🧩", name: "Puzzle Master",  desc: "Reach Shadow Match level 5",      check: s => ((s.levels.shadow && s.levels.shadow.unlocked) || 1) >= 5 },
   { id: "strategist",     icon: "⭕", name: "Strategist",     desc: "Reach Tic Tac Toe level 7",       check: s => ((s.levels.tictactoe && s.levels.tictactoe.unlocked) || 1) >= 7 },
+  { id: "trailblazer",    icon: "🧵", name: "Trailblazer",    desc: "Reach Trail Trace level 5",       check: s => ((s.levels.trail && s.levels.trail.unlocked) || 1) >= 5 },
   { id: "streak_3",       icon: "🔥", name: "3-Day Streak",  desc: "Play 3 days in a row",            check: s => s.streak >= 3 },
   { id: "streak_7",       icon: "🔥", name: "Week Streak",   desc: "Play 7 days in a row",            check: s => s.streak >= 7 },
   { id: "star_collector", icon: "⭐", name: "Star Collector", desc: "Earn 50 stars total",             check: s => s.totalStars >= 50 },
@@ -678,4 +679,35 @@ const TICTACTOE_LEVELS = [
   { label: "Master Level",  ages: "8-9",  smart: 0.95 },
   { label: "Unbeatable",    ages: "9-10", smart: 1.0  },
   { label: "Grandmaster",   ages: "9-10", smart: 1.0  }
+];
+
+/* ===================================================================
+   TRAIL TRACE — a kid-friendly, simplified take on the classic
+   "connect the numbers in order" trail puzzle. Draw a continuous path
+   touching each number in ascending order. Levels 1-6 are plain
+   number sequences (easy); levels 7-10 alternate number/letter
+   ("1-A-2-B-3-C...", a gentler version of Trail Making Test Part B)
+   to add a task-switching challenge for older kids.
+   =================================================================== */
+function trailNumberSeq(n){ return Array.from({ length: n }, (_, i) => String(i + 1)); }
+function trailAlternatingSeq(n){
+  const letters = "ABCDEFGHIJ";
+  const seq = [];
+  for (let i = 0; i < n; i++){
+    seq.push(String(i + 1));
+    if (i < n - 1) seq.push(letters[i]);
+  }
+  return seq;
+}
+const TRAIL_LEVELS = [
+  { label: "3 Steps",  ages: "3-4",  gen: () => trailNumberSeq(3) },
+  { label: "4 Steps",  ages: "4-5",  gen: () => trailNumberSeq(4) },
+  { label: "5 Steps",  ages: "4-5",  gen: () => trailNumberSeq(5) },
+  { label: "6 Steps",  ages: "5-6",  gen: () => trailNumberSeq(6) },
+  { label: "7 Steps",  ages: "5-6",  gen: () => trailNumberSeq(7) },
+  { label: "8 Steps",  ages: "6-7",  gen: () => trailNumberSeq(8) },
+  { label: "Switch It Up (1-A-2-B)", ages: "7-8",  gen: () => trailAlternatingSeq(4) },
+  { label: "Switch It Up (to 5)",    ages: "7-8",  gen: () => trailAlternatingSeq(5) },
+  { label: "Switch It Up (to 6)",    ages: "8-9",  gen: () => trailAlternatingSeq(6) },
+  { label: "Switch It Up (to 7)",    ages: "9-10", gen: () => trailAlternatingSeq(7) }
 ];
