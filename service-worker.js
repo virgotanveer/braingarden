@@ -3,7 +3,7 @@
    installed. Bump CACHE_NAME whenever shipping a new version so old
    caches get cleaned up on activate. */
 
-const CACHE_NAME = "brain-garden-v8";
+const CACHE_NAME = "brain-garden-v9";
 const PRECACHE_URLS = [
   "./",
   "./index.html",
@@ -17,7 +17,6 @@ const PRECACHE_URLS = [
   "./timemoney.js",
   "./tracing.js",
   "./flashcards.js",
-  "./videos.js",
   "./progress.js",
   "./parent.js",
   "./shop.js",

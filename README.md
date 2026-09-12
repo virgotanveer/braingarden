@@ -38,12 +38,6 @@ in two modes:
 - 📚 Browse — flip cards to reveal the answer + a fun fact
 - ❓ Quiz — multiple-choice quiz for each deck
 
-**🎬 A curated Video Library** — 11 hand-picked educational videos across 6
-categories, from well-established children's channels: Super Simple Songs,
-SciShow Kids, National Geographic Kids, and Sesame Street. See "About the
-Video Library" below — this is not a YouTube search, and it's worth reading
-before you deploy.
-
 **✍️ Writing & Time practice:**
 - Letter & Number Tracing — freehand canvas practice tracing over a faint guide character, for all 26 letters + 0-9
 - Telling Time — read an analog clock, 10 levels from "o'clock" up to elapsed-time word problems
@@ -71,34 +65,6 @@ progress backup** as a JSON file, or reset that profile's progress.
 Kids earn ⭐ stars for completing games/quizzes, saved locally on the device.
 A little star mascot ("Ziggy") reacts to right/wrong answers, and everything
 is chunky-button, big-emoji, easy-to-tap for small hands.
-
-## About the Video Library — please read before deploying
-
-Every video is a **specific, individually chosen YouTube video ID** hardcoded
-in `data.js` — there is no search box, no YouTube Data API call, and no
-"related videos" browsing inside the app. This was a deliberate choice: a
-live search or API-driven feed could surface anything matching a keyword,
-which isn't acceptable for a young child's app. A short whitelist that a
-human has actually looked at is the safer trade-off, even though it means
-fewer videos.
-
-Some technical choices that reduce (but can't eliminate) the chance of a
-child wandering off to unrelated content:
-- Embeds use `youtube-nocookie.com`, which reduces tracking and limits
-  YouTube's end-of-video suggestions to the same channel rather than the
-  wider platform.
-- The player screen tears down the video (removes the iframe) the instant
-  the "Back" button is tapped, so nothing keeps playing in the background.
-- A short "we hand-picked these" note is shown on both the category and
-  player screens.
-
-**What this can't do:** it can't guarantee a video stays appropriate forever
-— channels occasionally get hacked, videos get re-edited, or YouTube changes
-how its player behaves. Please treat the starter list as a first draft:
-watch each video yourself before handing the app to a child, and remove
-anything you're not comfortable with. If you add more videos later, follow
-the same rule that was used here — pick one specific, known video from a
-channel you trust, and paste in its ID; never wire up a search query.
 
 ## Deploying to GitHub Pages
 
@@ -152,8 +118,8 @@ go through `Storage.get("bg_your_key")` / `Storage.set(...)`, never raw
   Memory Match, Pattern Pop, Odd One Out, Shape Sorter and Count & Tap.
   `mathgames.js` has Math Quiz, Number Patterns and Word Scramble.
   `timemoney.js` has Telling Time and Coin Counting. `tracing.js` has the
-  letter/number tracing tool. `shadow.js` has the Shadow Match puzzle.
-  `videos.js` renders the Video Library from `VIDEO_LIBRARY` in `data.js`.
+  letter/number tracing tool. `shadow.js` has the Shadow Match puzzle,
+  `tictactoe.js` has Tic Tac Toe, `trailtrace.js` has Trail Trace.
   `progress.js` handles badges and the home-screen garden. `parent.js`
   handles Settings, the parent gate, and the dashboard. `shop.js` handles
   Ziggy's Shop and mascot customization. `review.js` shows the "missed
@@ -197,8 +163,8 @@ A few fixes went in specifically for older devices:
   existed in the browser engine Android 5 originally shipped with (2014).
   There are now `@supports` fallback rules — invisible to modern browsers —
   that switch to plain flexbox-with-margins and fixed heights if the
-  browser doesn't understand the newer syntax, so squares/cards/the video
-  player can't silently collapse to zero height.
+  browser doesn't understand the newer syntax, so squares/cards/tiles
+  can't silently collapse to zero height.
 
 **One important caveat:** Android 5.0+ can actually receive WebView updates
 through the Play Store independently of the Android OS version — so how
